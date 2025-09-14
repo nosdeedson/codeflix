@@ -1,9 +1,9 @@
 import './App.css';
-import { Box, createTheme, ThemeProvider, Typography } from '@mui/material';
+import { Box, ThemeProvider, Typography } from '@mui/material';
 import { Header } from './components/Header';
 import { Layout } from './components/Layout';
 import { appTheme } from './app/config/theme';
-import { Route, Routes, Link } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import { CategoryList } from './features/categories/CategoryList';
 import { CategoryCreate } from './features/categories/CategoryCreate';
 import { CategoryEdit } from './features/categories/CategoryEdit';

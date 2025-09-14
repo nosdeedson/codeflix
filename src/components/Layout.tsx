@@ -1,5 +1,5 @@
 import { Box, Container } from '@mui/material'
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 export function Layout({children}: {children : React.ReactNode}) {
   return (

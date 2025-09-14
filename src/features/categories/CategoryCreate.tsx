@@ -1,11 +1,13 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
-import { Category, createCategory } from './categorySlice';
+import { Category, createCategory, useCreateCategoryMutation } from './categorySlice';
 import { CategoryForm } from './components/CategoryForm';
 
 export const CategoryCreate: any = () => {
+    const {enqueueSnackbar} = useSnackbar();
+    const [createCategory, status] = useCreateCategoryMutation();
     const [isdisabled, setIsdisabled] = useState(false);
     const [categoryState, setCategoryState] = useState<Category>({
         id: "",
@@ -16,13 +18,10 @@ export const CategoryCreate: any = () => {
         name: "",
         updated_at: ""
     });
-    const dispatch = useAppDispatch();
-    const {enqueueSnackbar} = useSnackbar()
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        dispatch(createCategory(categoryState));
-        enqueueSnackbar("Category succefully created", { variant: "success"})
+        await createCategory(categoryState);
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +34,25 @@ export const CategoryCreate: any = () => {
         setCategoryState({...categoryState, [name]: checked })
 
     };
+
+    useEffect(() => {
+        if (status.isSuccess) {
+            enqueueSnackbar("Category succefully created", { variant: "success" });
+            setCategoryState({
+                id: "",
+                created_at: "",
+                deleted_at: "",
+                description: "",
+                is_active: false,
+                name: "",
+                updated_at: ""
+            })
+        }
+        if (status.isError) {
+            enqueueSnackbar("Category was not created", { variant: "error" });
+
+        }
+    }, [enqueueSnackbar, status?.error, status?.isSuccess])
 
     return (
         <Box>
