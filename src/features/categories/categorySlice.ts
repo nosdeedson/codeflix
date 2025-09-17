@@ -123,22 +123,7 @@ const categorySlice = createSlice({
   },
 })
 
-//select all category
-export const selectCategories = (state: RootState) => state.categories;
-// select category by id
-export const selectCategoryById = (state: RootState, id: string) => {  
-  return state.categories.find((category) => category.id === id) || {
-    id: "",
-    created_at: "",
-    deleted_at: "",
-    description: "",
-    is_active: false,
-    name: "",
-    updated_at: ""
-  };
-}
-
-export default categorySlice.reducer
+export default categorySlice.reducer;
 export const {createCategory, updateCategory, deleteCategory} = categorySlice.actions;
 
 export const {

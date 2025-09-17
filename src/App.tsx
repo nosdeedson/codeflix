@@ -8,6 +8,9 @@ import { CategoryList } from './features/categories/CategoryList';
 import { CategoryCreate } from './features/categories/CategoryCreate';
 import { CategoryEdit } from './features/categories/CategoryEdit';
 import { SnackbarProvider } from 'notistack'
+import CastMemberList from './features/cast/CastMemberList';
+import CastMemberCreate from './features/cast/CastMemberCreate';
+import CastMemberEdit from './features/cast/CastMemberEdit';
 
 function App() {
   return (<ThemeProvider theme={appTheme}>
@@ -31,6 +34,9 @@ function App() {
             <Route path='categories' element={<CategoryList />}></Route>
             <Route path='categories/create' element={<CategoryCreate />}></Route>
             <Route path='categories/edit/:id' element={<CategoryEdit />}></Route>
+            <Route path='cast-members' element={<CastMemberList />}></Route>
+            <Route path='cast-members/create' element={<CastMemberCreate />}></Route>
+            <Route path='cast-members/edit/:id' element={<CastMemberEdit />}></Route>
             <Route path='*'
               element={
                 <Box sx={{ color: 'white' }}>
