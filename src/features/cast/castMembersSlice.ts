@@ -90,7 +90,7 @@ export const castMembersApiSlice = apiSlice.injectEndpoints({
         query: updateCastMemberMutation,
         invalidatesTags: ['CastMembers']
     }),
-    deleteCastMembers: mutation<Result, CastMember>({
+    deleteCastMembers: mutation<Result, {id: string}>({
         query: deleteCategoryMutation,
         invalidatesTags: ['CastMembers']
     })

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function CastMemberCreate() {
+export const CastMemberCreate = () =>  {
   return (
     <div>CastMemberCreate</div>
   )

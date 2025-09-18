@@ -7,15 +7,17 @@ import { Category } from '../../types/Category';
 import { useDeleteCategoryMutation, useGetCategoriesQuery } from './categorySlice';
 import { CategoryTable } from './components/CategoryTable';
 
+const initialOptions = { 
+    page: 1, 
+    perPage: 10, 
+    search: "",
+    rowsPerPage: [10, 25, 50, 100]
+};
 
 export const CategoryList: any = () => {
-    const [rowsPerPage] = useState([10,25, 50, 100]);
-    const [page, setPage] = useState(1);
-    const [perPage, setPerPage] = useState(5);
-    const [search, setSearch] = useState("");
+    const [options, setOptions] = useState(initialOptions);
     const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
     
-    const options = {page, perPage, search };
     const { data, isFetching, error } = useGetCategoriesQuery(options);
     const categories: Category[] = data ? data.data : [];
 
@@ -23,24 +25,20 @@ export const CategoryList: any = () => {
     const { enqueueSnackbar } = useSnackbar();
 
     function handleOnPageChage(page: number) {
-        console.log(page);
-        setPage(page);
+        setOptions({...options, page});
     }
 
     function handleFilterChange(filterModel: GridFilterModel) {
-        const size = filterModel.quickFilterValues?.length;
-        if( size != undefined && size > 4) {
+        if( filterModel.quickFilterValues?.length) {
             const searching = filterModel?.quickFilterValues?.[0];
-            setSearch(searching);
+            setOptions({...options, search: searching});
         } else if(filterModel.quickFilterValues?.length == undefined){
-            setSearch("");
+           setOptions({...options, search: ""});
         }
     }
 
     function handleOnPageSizeChange(perPage: number) {
-        setPerPage(perPage)
-        console.log(perPage)
-    }
+        setOptions({...options, perPage});}
 
     async function handleDeleteCategory(id: string) {
         await deleteCategory({ id });
@@ -76,9 +74,9 @@ export const CategoryList: any = () => {
 
             <CategoryTable
                 data={data}
-                perPage={10}
+                perPage={options.perPage}
                 isFetching={isFetching}
-                rowsPerPage={rowsPerPage}
+                rowsPerPage={options.rowsPerPage}
                 handleOnPageChage={handleOnPageChage}
                 handleFilterChange={handleFilterChange}
                 handleOnPageSizeChange={handleOnPageSizeChange}

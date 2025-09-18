@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
 import { CategoryParams, Result, Results } from "../../types/Category";
 import { apiSlice } from "../api/apiSlice";
 
@@ -35,7 +34,6 @@ function parseQueryParams(params: CategoryParams){
 function getCategories({  page = 1, perPage = 10, search = ""}){
   const params = {page, perPage, search, isActive: true};
   const url = `${endpointUrl}?${parseQueryParams(params)}`;
-  console.log(url)
   return url
 }
 
