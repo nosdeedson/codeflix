@@ -1,7 +1,5 @@
-import { create } from "@mui/material/styles/createTransitions";
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-import { CastMember, CastMemberParams , Result, Results } from "../../types/CastMember";
+import { CastMember, CastMemberParams, Result, Results } from "../../types/CastMember";
 import { apiSlice } from "../api/apiSlice";
 
 
@@ -15,6 +13,7 @@ const castMember: CastMember = {
     type: 0,
     updated_at: ""
 }
+
 
 const castMembers: CastMember[] = [
     castMember,
