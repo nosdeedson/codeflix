@@ -14,11 +14,6 @@ const castMember: CastMember = {
     updated_at: ""
 }
 
-
-const castMembers: CastMember[] = [
-    castMember,
-]
-
 export const initialState = [
     castMember
 ] 

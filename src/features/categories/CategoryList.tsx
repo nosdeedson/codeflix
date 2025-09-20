@@ -3,7 +3,6 @@ import { GridFilterModel } from '@mui/x-data-grid';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Category } from '../../types/Category';
 import { useDeleteCategoryMutation, useGetCategoriesQuery } from './categorySlice';
 import { CategoryTable } from './components/CategoryTable';
 
@@ -19,26 +18,25 @@ export const CategoryList: any = () => {
     const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
     
     const { data, isFetching, error } = useGetCategoriesQuery(options);
-    const categories: Category[] = data ? data.data : [];
 
-    // const categories = useAppSelector(selectCategories);
     const { enqueueSnackbar } = useSnackbar();
 
     function handleOnPageChage(page: number) {
-        setOptions({...options, page});
+        setOptions({...options, page: (page + 1)});
     }
 
     function handleFilterChange(filterModel: GridFilterModel) {
         if( filterModel.quickFilterValues?.length) {
             const searching = filterModel?.quickFilterValues?.[0];
             setOptions({...options, search: searching});
-        } else if(filterModel.quickFilterValues?.length == undefined){
+        } else {
            setOptions({...options, search: ""});
         }
     }
 
     function handleOnPageSizeChange(perPage: number) {
-        setOptions({...options, perPage});}
+        setOptions({...options, perPage});
+    }
 
     async function handleDeleteCategory(id: string) {
         await deleteCategory({ id });

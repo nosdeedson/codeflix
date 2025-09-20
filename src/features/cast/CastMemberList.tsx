@@ -3,7 +3,7 @@ import { GridFilterModel } from '@mui/x-data-grid';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { deleteCastMember, useDeleteCastMembersMutation, useGetCastMembersQuery } from './castMembersSlice';
+import { useDeleteCastMembersMutation, useGetCastMembersQuery } from './castMembersSlice';
 import { CastMembersTable } from './components/CastMembersTable';
 
 const initialOptions = {
@@ -25,15 +25,14 @@ export const CastMemberList = () => {
   }
 
   function handleOnPageChage(page: number) {
-    console.log(page);
-    setOptions({...options, page});
+    setOptions({...options, page:  (page + 1)});
   }
 
   function handleFilterChange(filterModel: GridFilterModel) {
     if (filterModel.quickFilterValues?.length) {
       const searching = filterModel?.quickFilterValues?.[0];
       setOptions({...options, search: searching});
-    } else if (filterModel.quickFilterValues?.length == undefined) {
+    } else {
       setOptions({...options, search: ""});
     }
   }

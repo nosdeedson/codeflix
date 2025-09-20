@@ -7,7 +7,7 @@ import { CategoryForm } from './components/CategoryForm';
 export const CategoryCreate: any = () => {
     const {enqueueSnackbar} = useSnackbar();
     const [createCategory, status] = useCreateCategoryMutation();
-    const [isdisabled, setIsdisabled] = useState(false);
+    const [isdisabled] = useState(false);
     const [categoryState, setCategoryState] = useState<Category>({
         id: "",
         created_at: "",
@@ -51,7 +51,7 @@ export const CategoryCreate: any = () => {
             enqueueSnackbar("Category was not created", { variant: "error" });
 
         }
-    }, [enqueueSnackbar, status?.error, status?.isSuccess])
+    }, [enqueueSnackbar, status])
 
     return (
         <Box>

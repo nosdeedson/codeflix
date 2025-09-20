@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, Radio, RadioGroup, Switch, TextField } from '@mui/material';
+import { Box, Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CastMember } from '../../../types/CastMember';
@@ -44,12 +44,12 @@ export function CastMembersForm({
                             <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel>
                             <RadioGroup
                                 aria-labelledby="demo-radio-buttons-group-label"
-                                defaultValue={1}
+                                value={castMember.type ? castMember.type : 1}
                                 name="type"
                                 onChange={handleTypeChange}
                             >
-                                <FormControlLabel value={1} control={<Radio />} label="Director" />
-                                <FormControlLabel value={2} control={<Radio />} label="Actor" />
+                                <FormControlLabel value="1" control={<Radio />} label="Director" />
+                                <FormControlLabel value="2" control={<Radio />} label="Actor" />
                             </RadioGroup>
                         </FormControl>
                     </Grid>

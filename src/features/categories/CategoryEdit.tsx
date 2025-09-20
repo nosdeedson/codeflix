@@ -2,7 +2,6 @@ import { Box, Paper, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../app/hooks';
 import { Category, useGetCategoryQuery, useUpdateCategoryMutation } from './categorySlice';
 import { CategoryForm } from './components/CategoryForm';
 
@@ -64,7 +63,7 @@ export const CategoryEdit: any = () => {
                 <CategoryForm
                     category={categoryState}
                     isdisabled={status.isLoading}
-                    isLoading={false}
+                    isLoading={isFetching}
                     handleSubmit={handleSubmit}
                     handleChange={handleChange}
                     handleToggle={handleToggle}

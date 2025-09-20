@@ -9,11 +9,11 @@ import { CastMembersForm } from './components/CastMembersForm';
 export const CastMemberCreate = () =>  {
   const {enqueueSnackbar} = useSnackbar();
   const [createCastMember, status] = useCreateCastMembersMutation();
-  const [isDisabled, setIsDisabled] = useState();
+  const [isDisabled] = useState();
   const [castMemberState, setCastMemberState] = useState<CastMember>({
     id: "",
     name: "",
-    type: 0,
+    type: 1,
     created_at: "",
     updated_at: "",
     deleted_at: null

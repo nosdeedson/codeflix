@@ -95,10 +95,6 @@ const category: Category = {
     updated_at: "",
 }
 
-const categories: Category[] = [
-    category,
-]
-
 export const initialState = [
     category,
 ]
