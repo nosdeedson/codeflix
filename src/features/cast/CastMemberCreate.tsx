@@ -65,7 +65,7 @@ export const CastMemberCreate = () =>  {
             </Typography>
             <CastMembersForm
               castMember={castMemberState}
-              isdisabled={isDisabled}
+              isdisabled={status.isLoading}
               isLoading={status.isLoading}
               handleSubmit={handleSubmit}
               handleChange={handleChange}

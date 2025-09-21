@@ -1,1 +1,11 @@
 'rfc' cria um component
+
+yarn test --coverage
+
+yarn test -- --coverage
+
+tells jest that there was a change in the component
+yarn test -u 
+
+tests all files
+yarn test -- --coverage --watchAll=false
