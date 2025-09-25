@@ -39,20 +39,10 @@ export function CategoryTable({
         );
     }
 
-    // function mapDataToGridRows(data: Results) {
-    //     const { data: categories } = data;
-    //     return categories.map((category) => ({
-    //         id: category.id,
-    //         name: category.name,
-    //         description: category.description,
-    //         isActive: category.is_active,
-    //         createdAt: new Date(category.created_at).toLocaleDateString('pt-BR'),
-    //     }))
-    // }
-
     function renderActionsCell(row: GridRenderCellParams) {
         return (
             <IconButton
+                aria-label="delete"
                 color='secondary'
                 onClick={() => handleDelete(row.value)}
 
@@ -118,27 +108,6 @@ export function CategoryTable({
     // const rowCount = data?.meta?.total ?? 0;
 
     return (
-        // <Box sx={{ display: 'flex', height: 375 }} >
-        //     <DataGrid
-        //         components={{ Toolbar: GridToolbar }}
-        //         columns={columns}
-        //         componentsProps={componentProps}
-        //         // checkboxSelection={true}
-        //         disableSelectionOnClick={true}
-        //         disableColumnSelector={true}
-        //         disableColumnFilter={true}
-        //         disableDensitySelector={true}
-        //         loading={isFetching}
-        //         onFilterModelChange={handleFilterChange}
-        //         onPageChange={handleOnPageChage}
-        //         onPageSizeChange={handleOnPageSizeChange}
-        //         pageSize={perPage}
-        //         paginationMode={"server"}
-        //         rowsPerPageOptions={rowsPerPage}
-        //         rowCount={rowCount}
-        //         rows={rows}
-        //     />
-        // </Box>
         <BaseTable
             data={data}
             mapDataToGridRows={mapDataToGridRows}

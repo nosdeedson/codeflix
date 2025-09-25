@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react"
-import {  CastMembersTable } from "./CastMembersTable"
-import { GridFilterModel, GridRenderCellParams } from "@mui/x-data-grid"
-import { BrowserRouter, MemoryRouter } from "react-router-dom"
+import { GridFilterModel } from "@mui/x-data-grid"
+import { render } from "@testing-library/react"
+import { BrowserRouter } from "react-router-dom"
+import { CastMembersTable } from "./CastMembersTable"
 
 
 const data = {
@@ -66,25 +66,28 @@ describe('CastMembersTable', () => {
         expect(asFragment()).toMatchSnapshot()
     });
 
-    // it('should render castmember table testing renderNameCell', () => {
-    //     const mockRow = {
-    //         id: '123',
-    //         value: 'John Doe'
-    //     } as GridRenderCellParams;
+    it('should render castmember table with data null and isLoading state', () => {
+        const {asFragment} = render(<CastMembersTable {...Props} data={{data: [], meta: {}} as any} isFetching />,{
+            wrapper: BrowserRouter
+        })
+        expect(asFragment()).toMatchSnapshot()
+    });
 
-    //     render(
-    //         <MemoryRouter>
-    //             <div style={{ height: 400, width: 600 }}> {/* important! */}
-    //             <CastMembersTable {...Props}/>
-    //             </div>
-    //         </MemoryRouter>
-    //     );
+    it('should render castmember table with type equals to 1', () => {
+        Props.data.data[0].type = 1;
+        const {asFragment} = render(<CastMembersTable {...Props} />,{
+            wrapper: BrowserRouter
+        })
+        expect(asFragment()).toMatchSnapshot()
+    });
 
-    //     const link = screen.getByRole('link', {name: '/Schumm/i'});
-    //     expect(link).toBeInTheDocument()
-    //     expect(link).toHaveAttribute('href', '/cast-members/edit/479fee0e-41d0-4b23-bdbc-597e5e69516c');
-        
-    // })
+    it('should render castmember table with type equals to 2', () => {
+        Props.data.data[0].type = 2;
+        const {asFragment} = render(<CastMembersTable {...Props} />,{
+            wrapper: BrowserRouter
+        })
+        expect(asFragment()).toMatchSnapshot()
+    });
 
     
 })

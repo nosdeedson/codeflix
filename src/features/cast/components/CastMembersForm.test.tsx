@@ -38,7 +38,6 @@ const makeProps = (type = 1) => ({
 
 describe("CastMembersForm", () => {
 
-
   it("should render castMember form  correctly", () => {
     const { asFragment } = render(<CastMembersForm {...Props} />, {
       wrapper: BrowserRouter,
@@ -57,8 +56,8 @@ describe("CastMembersForm", () => {
 
   it("should render castMember using type equal to 1", () => {
     render(<CastMembersForm {...makeProps(1)} />
-      , { wrapper: BrowserRouter 
-
+      , {
+        wrapper: BrowserRouter
       });
 
     const directorRadio = screen.getByLabelText("Director") as HTMLInputElement;
@@ -77,7 +76,7 @@ describe("CastMembersForm", () => {
     expect(directorRadio.checked).toBe(false);
   });
 
-    it("should render castMember using type undefined", () => {
+  it("should render castMember using type undefined", () => {
     render(<CastMembersForm {...makeProps(undefined)} />
       , { wrapper: BrowserRouter });
 
