@@ -1,35 +1,30 @@
-import { Snackbar } from "@mui/material";
 import { PreloadedState } from "@reduxjs/toolkit";
-import { RenderOptions } from "@testing-library/react";
+import { render, RenderOptions } from "@testing-library/react";
 import { SnackbarProvider } from "notistack";
-import { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { RootState, AppDispatch, store } from "../app/store";
-import { render } from "@testing-library/react";
+import { AppStore, RootState, setupStore } from "../app/store";
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
     preloadedState?: PreloadedState<RootState>;
-    store?: any;
+    store?: AppStore;
 }
 
 export function renderWithProviders(
     ui: React.ReactElement,
-    {
-        store: customStore = store,
-        ...renderOptions
-    }: ExtendedRenderOptions = {}
-) {
-    function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
-        return (
+    {store = setupStore(), ...renderOptions}: ExtendedRenderOptions= {}
+){
+    function Wrapper({children}: PropsWithChildren<{}>): JSX.Element{
+        return(
             <Provider store={store}>
                 <BrowserRouter>
-                    <SnackbarProvider>{children}</SnackbarProvider>
+                    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>{children}</SnackbarProvider>
                 </BrowserRouter>
             </Provider>
-        )
-    }
-    return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) }
+        );
+    };
+    return { store, ...render(ui, {wrapper: Wrapper, ...renderOptions})}
 }
 
-export * from '@testing-library/react'
+export * from '@testing-library/react';
