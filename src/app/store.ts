@@ -1,13 +1,15 @@
 import { configureStore, ThunkAction, Action, combineReducers, PreloadedState } from '@reduxjs/toolkit';
 
 import { apiSlice } from '../features/api/apiSlice';
-import categoriesReducers from "../features/categories/categorySlice";
-import castMembersReducers from '../features/cast/castMembersSlice';
+import { categoriesApiSlice } from "../features/categories/categorySlice";
+import { castMembersApiSlice } from '../features/cast/castMembersSlice';
 
 const rootReducer = combineReducers({
-  categories: categoriesReducers,
-  castMembers: castMembersReducers,
   [apiSlice.reducerPath]: apiSlice.reducer,
+  [categoriesApiSlice.reducerPath]: apiSlice.reducer,
+  [castMembersApiSlice.reducerPath]: apiSlice.reducer,
+  // categories: categoriesReducers,
+  // castMembers: castMembersReducers,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {

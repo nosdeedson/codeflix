@@ -3,20 +3,17 @@ import { CastMember, CastMemberParams, Result, Results } from "../../types/CastM
 import { apiSlice } from "../api/apiSlice";
 
 
-const endpointUrl = '/cast_members'
-
-const castMember: CastMember = {
-    id: "",
-    created_at: "",
-    deleted_at: null,
-    name: "",
-    type: 0,
-    updated_at: ""
+export const initialState: CastMember = {
+    id: '',
+    name: '',
+    type: 1,
+    created_at: '',
+    updated_at: '',
+    deleted_at: null
 }
 
-export const initialState = [
-    castMember
-] 
+const endpointUrl = '/cast_members'
+
 
 function parseQueryParams(params: CastMemberParams){
     const query = new URLSearchParams();
@@ -91,26 +88,6 @@ export const castMembersApiSlice = apiSlice.injectEndpoints({
    })
 });
 
-const castMemberSlice = createSlice({
-    name: "castMembers",
-    initialState: initialState,
-    reducers: {
-        createCastMember: (state, action) => {
-            state.push(action.payload)
-        },
-        updateCastMember: (state, action) => {
-            const index = state.findIndex((castMember) => castMember.id === action.payload.id);
-            state[index] = action.payload;
-        },
-        deleteCastMember: (state, action) => {
-            const index = state.findIndex((castMember) => castMember.id === action.payload.id);
-            state.splice(index, 1);
-        }
-    }
-});
-
-export default castMemberSlice.reducer;
-export const {createCastMember, updateCastMember, deleteCastMember} = castMemberSlice.actions
 
 export const {
     useGetCastMembersQuery,

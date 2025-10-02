@@ -53,6 +53,7 @@ export const CategoryList: any = () => {
     }, [deleteCategoryStatus, enqueueSnackbar]);
 
     if(error){
+        console.log(error);
         return <Typography variant='h2' color={'whitesmoke'}>Something went wrong!!</Typography>
     }
 

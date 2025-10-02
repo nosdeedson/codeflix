@@ -34,7 +34,7 @@ export function BaseTable<T>({
     const componentProps = {
         toolbar: {
             showQuickFilter: true,
-            quickerFilterProps: {debounceMs: 500 },
+            quickFilterProps: {debounceMs: 500 },
         }
     };
 

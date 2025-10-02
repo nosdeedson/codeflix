@@ -13,18 +13,19 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 
 export function renderWithProviders(
     ui: React.ReactElement,
-    {store = setupStore(), ...renderOptions}: ExtendedRenderOptions= {}
-){
-    function Wrapper({children}: PropsWithChildren<{}>): JSX.Element{
-        return(
+    { store = setupStore(), ...renderOptions }: ExtendedRenderOptions = {}
+) {
+    function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
+        return (
             <Provider store={store}>
                 <BrowserRouter>
-                    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>{children}</SnackbarProvider>
+                    <SnackbarProvider autoHideDuration={5000} >{children}</SnackbarProvider>
                 </BrowserRouter>
             </Provider>
         );
-    };
-    return { store, ...render(ui, {wrapper: Wrapper, ...renderOptions})}
+    }
+
+    return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
 }
 
 export * from '@testing-library/react';

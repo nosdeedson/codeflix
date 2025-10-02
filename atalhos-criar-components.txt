@@ -9,3 +9,6 @@ yarn test -u
 
 tests all files
 yarn test -- --coverage --watchAll=false
+
+test a file 
+yarn test --testPathPattern src/features/categories/CategoryList.test.tsx

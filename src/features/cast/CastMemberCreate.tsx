@@ -21,7 +21,6 @@ export const CastMemberCreate = () =>  {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    console.log(castMemberState);
     await createCastMember(castMemberState);
     setCastMemberState({
     id: "",
@@ -34,13 +33,11 @@ export const CastMemberCreate = () =>  {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     const {name, value} = e.target;
     setCastMemberState({...castMemberState, [name]: value});
   };
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     const {name, value} = e.target;
     const type = parseInt(value);
     setCastMemberState({...castMemberState, [name]: type});
@@ -51,6 +48,7 @@ export const CastMemberCreate = () =>  {
       enqueueSnackbar('Cast Member created successfully', {variant: 'success'});
     }
     if (status.isError) {
+      console.log(status.error);
       enqueueSnackbar('Error creating Cast Member', {variant: 'error'});
     }
   }, [status, enqueueSnackbar]);

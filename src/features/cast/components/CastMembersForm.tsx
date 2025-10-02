@@ -35,6 +35,7 @@ export function CastMembersForm({
                                 value={castMember?.name}
                                 disabled={isdisabled}
                                 onChange={handleChange}
+                                inputProps={{"data-testid": "name"}}
                             />
                         </FormControl>
                     </Grid>
@@ -47,6 +48,7 @@ export function CastMembersForm({
                                 value={castMember.type ? castMember.type : 1}
                                 name="type"
                                 onChange={handleTypeChange}
+                                data-testid="type"
                             >
                                 <FormControlLabel value="1" control={<Radio />} label="Director" />
                                 <FormControlLabel value="2" control={<Radio />} label="Actor" />
