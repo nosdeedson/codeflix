@@ -11,6 +11,9 @@ import { SnackbarProvider } from 'notistack'
 import { CastMemberList } from './features/cast/CastMemberList';
 import { CastMemberCreate } from './features/cast/CastMemberCreate';
 import { CastMemberEdit } from './features/cast/CastMemberEdit';
+import { GenreList } from './features/genre/GenreList';
+import { GenreEdit } from './features/genre/GenreEdit';
+import { GenreCreate } from './features/genre/GenreCreate';
 
 function App() {
   return (<ThemeProvider theme={appTheme}>
@@ -41,6 +44,13 @@ function App() {
             <Route path='cast-members' element={<CastMemberList />}></Route>
             <Route path='cast-members/create' element={<CastMemberCreate />}></Route>
             <Route path='cast-members/edit/:id' element={<CastMemberEdit />}></Route>
+            
+            {/* Genres */}
+            <Route path='genres' element={<GenreList/>}></Route>
+            <Route path='genres/create' element={<GenreCreate/>}></Route>
+            <Route path='genres/edit/:id' element={<GenreEdit/>}></Route>
+
+            {/* 404 */}
             <Route path='*'
               element={
                 <Box sx={{ color: 'white' }}>
@@ -49,7 +59,7 @@ function App() {
                 </Box>
               }
             ></Route>
-            <Route></Route>
+
           </Routes>
         </Layout>
       </Box>

@@ -61,7 +61,7 @@ export const CastMemberEdit = () => {
 
         <CastMembersForm
           castMember={castMemberState}
-          isdisabled={status.isLoading}
+          isDisabled={status.isLoading}
           isLoading={isFetching}
           handleSubmit={handleSubmit}
           handleChange={handleChange}
