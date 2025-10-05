@@ -8,7 +8,6 @@ import { categoryResponse } from './mocks'
 
 export const handlers = [
     rest.get(`*`, async (req, res, ctx) => {
-       console.log('Intercepted request:', req.url.toString());
     return await res(ctx.json(categoryResponse), ctx.delay(150));
   }),
 ];

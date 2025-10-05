@@ -43,7 +43,20 @@ export const GenreEdit = () => {
         categories_id: genre?.data?.categories?.map(cat => cat.id)
       });
     }
-  }, [genre] )
+  }, [genre] );
+
+  useEffect(() => {
+    if(statusGenre.isSuccess){
+      enqueueSnackbar('Genre edit successfully', {variant: 'success'});
+    }
+    if(statusGenre.isError){
+      enqueueSnackbar('Error while editing genre', {variant: 'error'});
+    }
+  },[statusGenre, enqueueSnackbar]);
+
+  if(error){
+    console.log(error)
+  }
 
   return (
     <Box>

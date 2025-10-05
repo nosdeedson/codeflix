@@ -39,7 +39,6 @@ export const CastMemberList = () => {
 
   function handleOnPageSizeChange(perPage: number) {
     setOptions({...options, perPage});
-    console.log(perPage);
   }
 
 

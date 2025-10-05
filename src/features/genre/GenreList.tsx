@@ -4,7 +4,7 @@ import { GridFilterModel } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
-import GenreTable from "./componest/GenreTable";
+import {GenreTable} from "./componest/GenreTable";
 import { useDeleleGenreMutation, useGetGenreQuery, useGetGenresQuery } from "./GenreSlice";
 
 const initialOptions = {

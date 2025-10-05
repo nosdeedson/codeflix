@@ -43,11 +43,6 @@ const Props = {
     handleDelete: jest.fn(),
 }
 
-const mockHandleDelete = jest.fn();
-const mockHandleOnPageChange = jest.fn();
-const mockHandleFilterChange = jest.fn();
-const mockHandleOnPageSizeChange = jest.fn();
-
 function setUp(){
     render(
         <BrowserRouter>
@@ -86,7 +81,7 @@ describe('CategoryTable', () => {
     it('should delete a category', async () => {
         // await setUp();
         // const deleteButton = await screen.findByTestId('delete')as any;
-        // console.log(deleteButton)
+        // 
         // fireEvent.click(deleteButton);
         // expect(Props.handleDelete).toHaveBeenCalled();
         // expect(Props.handleDelete).toHaveBeenCalledWith('398deb80-db08-4063-bba3-31ef961be11c')

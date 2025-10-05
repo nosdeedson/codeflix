@@ -37,7 +37,7 @@ export function GenreForm(
                                 value={genre.name}
                                 disabled={isLoading}
                                 onChange={handleChange}
-                                inputProps={{ 'data-testid': "name" }}
+                                inputProps={{"data-testid": "name"}}
                             />
                         </FormControl>
 

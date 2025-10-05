@@ -28,6 +28,10 @@ export const GenreCreate = () => {
         }
     }, [status, enqueueSnackbar]);
 
+    if(error){
+        console.log(error);
+    }
+
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         await createGenre(genreState);

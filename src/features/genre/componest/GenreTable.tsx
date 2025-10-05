@@ -1,10 +1,9 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Typography } from '@mui/material';
 import { GridColDef, GridFilterModel, GridRenderCellParams } from '@mui/x-data-grid';
-import React from 'react'
 import { Link } from 'react-router-dom';
-import { Results } from '../../../types/Genre';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { BaseTable } from '../../../components/BaseTable';
+import { Results } from '../../../types/Genre';
 
 type Props = {
     data: Results | undefined;
@@ -17,7 +16,7 @@ type Props = {
     handleDelete: (id: string) => void;
 }
 
-export default function GenreTable({
+export function GenreTable({
     data,
     perPage,
     isFetching,
