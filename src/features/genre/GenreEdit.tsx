@@ -4,15 +4,14 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { GenrePayload } from '../../types/Genre';
-import { useGetCategoriesQuery } from '../categories/categorySlice';
 import { GenreForm } from './componest/GenreForm';
-import { useGetGenreQuery, useUpdateGenreMutation } from './GenreSlice';
+import { useGetAllCategoriesQuery, useGetGenreQuery, useUpdateGenreMutation } from './GenreSlice';
 
 export const GenreEdit = () => {
 
   const id = useParams().id || "";
-  const { data: genre, isFetching } = useGetGenreQuery({ id });
-  const { data: categories, error } = useGetCategoriesQuery({});
+  const { data: genre } = useGetGenreQuery({ id });
+  const { data: categories } = useGetAllCategoriesQuery();
   const [genreState, setGenreState] = useState<GenrePayload>({
     id: "",
     name: "",
@@ -53,10 +52,6 @@ export const GenreEdit = () => {
       enqueueSnackbar('Error while editing genre', {variant: 'error'});
     }
   },[statusGenre, enqueueSnackbar]);
-
-  if(error){
-    console.log(error)
-  }
 
   return (
     <Box>

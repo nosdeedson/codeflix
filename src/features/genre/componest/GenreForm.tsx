@@ -6,7 +6,7 @@ import { GenrePayload } from "../../../types/Genre";
 
 
 type Props = {
-    categories: Category[];
+    categories: Category[] | [];
     genre: GenrePayload;
     isDisabled?: boolean;
     isLoading?: boolean;
@@ -46,11 +46,17 @@ export function GenreForm(
                         <FormControl fullWidth>
                             <Autocomplete
                                 multiple
-                                disablePortal
+                                loading={isLoading}
                                 options={categories}
-                                value={categories.filter(cat => genre?.categories_id?.includes(cat.id))}
-                                getOptionLabel={(option) => option.name}
                                 isOptionEqualToValue={(option, value) => option.id === value.id}
+                                value={categories?.filter(cat => genre?.categories_id?.includes(cat.id))}
+                                disabled={isLoading}
+                                getOptionLabel={(option) => option.name}
+                                renderOption={(props, option) => (
+                                    <li {...props} key={option.id}>
+                                        {option.name}
+                                    </li>
+                                )}
                                 onChange={(e, newValue) => {
                                     handleChange({
                                         target: { name: 'categories_id', value: newValue.map(c => c.id) }

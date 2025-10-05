@@ -1,17 +1,14 @@
-import { Box, Paper, Typography } from '@mui/material'
-import { useSnackbar } from 'notistack'
+import { Box, Paper, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import { Genre, GenrePayload } from '../../types/Genre';
-import { useGetCategoriesQuery } from '../categories/categorySlice';
-import { GenreForm } from './componest/GenreForm'
-import { useCreateGenreMutation } from './GenreSlice';
+import { GenrePayload } from '../../types/Genre';
+import { GenreForm } from './componest/GenreForm';
+import { useCreateGenreMutation, useGetAllCategoriesQuery } from './GenreSlice';
 
 export const GenreCreate = () => {
     const { enqueueSnackbar } = useSnackbar();
     const [createGenre, status] = useCreateGenreMutation();
-    const [isDisabled] = useState();
-    const { data, isFetching, error } = useGetCategoriesQuery({});
-
+    const { data: categories } = useGetAllCategoriesQuery();
     const [genreState, setGenreState] = useState<GenrePayload>({
         id: "",
         name: "",
@@ -27,10 +24,6 @@ export const GenreCreate = () => {
             enqueueSnackbar('Something went wrong', { variant: 'error' });
         }
     }, [status, enqueueSnackbar]);
-
-    if(error){
-        console.log(error);
-    }
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -62,7 +55,7 @@ export const GenreCreate = () => {
                     </Box>
                 </Box>
                 <GenreForm
-                    categories={data?.data || []}
+                    categories={categories?.data || []}
                     genre={genreState}
                     isDisabled={status.isLoading}
                     isLoading={status.isLoading}
