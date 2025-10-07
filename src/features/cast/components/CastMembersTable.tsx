@@ -1,8 +1,9 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Typography } from '@mui/material';
-import { GridColDef, GridFilterModel, GridRenderCellParams } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
+import { GridColDef, GridFilterModel, GridRenderCellParams, renderActionsCell } from '@mui/x-data-grid';
 import { BaseTable } from '../../../components/BaseTable';
+import { renderCellActions } from '../../../helpers/renderActionCell/renderCellActions';
+import { renderNameCell } from '../../../helpers/renderNameCell/renderNameCell';
 import { Results } from '../../../types/CastMember';
 
 
@@ -29,34 +30,11 @@ export function CastMembersTable({
     handleDelete
 }: Props) {
 
-    function renderNameCell(row: GridRenderCellParams) {
-        return (
-            <Link
-                style={{ textDecoration: 'none' }}
-                to={`/cast-members/edit/${row.id}`}
-            >
-                <Typography color="primary">{row.value}</Typography>
-            </Link>
-        );
-    }
-
     function renderType(row: GridRenderCellParams) {
         return (
             <Typography >
                 {row.value === 1 ? "Director" : "Actor"}
             </Typography>
-        );
-    }
-
-    function renderActionsCell(row: GridRenderCellParams) {
-        return (
-            <IconButton
-                color='secondary'
-                onClick={() => handleDelete(row.value)}
-
-            >
-                <DeleteIcon />
-            </IconButton>
         );
     }
 
@@ -72,7 +50,7 @@ export function CastMembersTable({
             field: 'name',
             headerName: 'Name',
             flex: 1,
-            renderCell: renderNameCell
+            renderCell: (row) => renderNameCell(row, 'cast-members')
         },
         {
             field: 'type',
@@ -84,7 +62,7 @@ export function CastMembersTable({
             field: 'id',
             headerName: 'Actions',
             flex: 1,
-            renderCell: renderActionsCell
+            renderCell: (row) => renderCellActions(row, handleDelete)
         }
     ]
 

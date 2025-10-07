@@ -6,14 +6,14 @@ import { renderWithProviders } from "../../../utils/test-utils";
 import userEvent from "@testing-library/user-event";
 
 const category: Category = {
-            "id": "8cfed211-62ad-4b05-928b-83ff7dabac2a",
-            "name": "Tomato",
-            "description": "Quisquam odio omnis fugit impedit culpa sed.",
-            "is_active": true,
-            "deleted_at": '',
-            "created_at": "2025-09-27T20:42:38+0000",
-            "updated_at": "2025-09-27T20:42:38+0000"
-        };
+    "id": "8cfed211-62ad-4b05-928b-83ff7dabac2a",
+    "name": "Tomato",
+    "description": "Quisquam odio omnis fugit impedit culpa sed.",
+    "is_active": true,
+    "deleted_at": '',
+    "created_at": "2025-09-27T20:42:38+0000",
+    "updated_at": "2025-09-27T20:42:38+0000"
+};
 
 const Props = {
     categories: [category],
@@ -22,10 +22,11 @@ const Props = {
         name: 'test',
         created_at: "2021-10-01T00:00:00.000000Z",
         updated_at: "2021-10-01T00:00:00.000000Z",
+        deleted_at: null,
         is_active: false,
         description: null,
         pivot: null,
-        categories: null
+        categories: []
     },
     isDisabled: false,
     isLoaging: false,
@@ -50,7 +51,7 @@ describe('Genre', () => {
     });
 
     it('should render handle change', async () => {
-        render(<GenreForm {...Props}/>,  {
+        render(<GenreForm {...Props} />, {
             wrapper: BrowserRouter
         });
 
@@ -60,7 +61,19 @@ describe('Genre', () => {
         const option = await screen.findByText("Tomato");
         await userEvent.click(option);
         expect(Props.handleChange).toHaveBeenLastCalledWith({
-            target: {name: "categories_id", value: ["8cfed211-62ad-4b05-928b-83ff7dabac2a"]}
+            target: {
+                name: "categories", value: [
+                    {
+                        "created_at": "2025-09-27T20:42:38+0000",
+                        "deleted_at": "",
+                        "description": "Quisquam odio omnis fugit impedit culpa sed.",
+                        "id": "8cfed211-62ad-4b05-928b-83ff7dabac2a",
+                        "is_active": true,
+                        "name": "Tomato",
+                        "updated_at": "2025-09-27T20:42:38+0000",
+                    }
+                ]
+            }
         })
 
     });

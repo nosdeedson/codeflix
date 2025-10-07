@@ -40,5 +40,5 @@ export interface CastMemberParams{
     page?: number;
     perPage?: number;
     search?: string;
-    type?: number;
+    type?: number; // it is not being used
 }

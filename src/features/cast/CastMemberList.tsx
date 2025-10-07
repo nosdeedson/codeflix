@@ -3,6 +3,9 @@ import { GridFilterModel } from '@mui/x-data-grid';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { onHandleFilterChange } from '../../helpers/handleFilterChange/handleFilterChange';
+import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { CastMemberParams } from '../../types/CastMember';
 import { useDeleteCastMembersMutation, useGetCastMembersQuery } from './castMembersSlice';
 import { CastMembersTable } from './components/CastMembersTable';
 
@@ -15,10 +18,10 @@ const initialOptions = {
 
 export const CastMemberList = () => {
   const [options, setOptions] = useState(initialOptions);
-  const { data, isFetching, error } = useGetCastMembersQuery(options);
   const [deleteCastMember, deleteCastmemberStatus] = useDeleteCastMembersMutation();
 
-  const {enqueueSnackbar} = useSnackbar();
+  const params: CastMemberParams = {page: options.page, perPage: options.perPage, search: options.search}
+  const { data, isFetching, error } = useGetCastMembersQuery(params);
 
   async function handleDelete(id: string) {
     await deleteCastMember({ id });
@@ -29,37 +32,26 @@ export const CastMemberList = () => {
   }
 
   function handleFilterChange(filterModel: GridFilterModel) {
-    if (filterModel.quickFilterValues?.length) {
-      const searching = filterModel?.quickFilterValues?.[0];
-      setOptions({...options, search: searching});
-    } else {
-      setOptions({...options, search: ""});
-    }
+    onHandleFilterChange(filterModel, options, setOptions);
   }
 
   function handleOnPageSizeChange(perPage: number) {
     setOptions({...options, perPage});
   }
 
-
-
-  useEffect(() => {
-    if (deleteCastmemberStatus.isSuccess) {
-      enqueueSnackbar('Cast Member deleted', {variant: 'success'});
-    }
-    if (deleteCastmemberStatus.isError) {
-      enqueueSnackbar('Error deleting Cast Member', {variant: 'error'});
-    }
-  }, [deleteCastmemberStatus, enqueueSnackbar]);
+  useHandleSnackbar( deleteCastmemberStatus,
+     {successMessage: 'Cast Member deleted', errorMessage: 'Error deleting Cast Member'}
+  );
 
   if (error) {
-    return <Typography variant='h2' color={'whitesmoke'}>Somenthin went wrong</Typography>
+    console.log(error)
+    return <Typography variant='h2' color={'whitesmoke'}>Somenthing went wrong</Typography>
   }
-
 
   return (
     <Box maxWidth='lg' sx={{ mt: 4, mb: 4}}>
-      <Box display={'flex'} justifyContent={'flex-end'} >
+      <Box display='flex' justifyContent='space-between'>
+        <Typography variant='h5' color='whitesmoke'>List Cast Members</Typography>
         <Button 
           variant='contained'
           color='secondary'

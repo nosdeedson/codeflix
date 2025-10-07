@@ -1,9 +1,8 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { fireEvent, renderWithProviders, screen, waitFor } from "../../utils/test-utils";
-import { CastMemberCreate } from "./CastMemberCreate";
-import { userEvent } from '@testing-library/user-event'
 import { baseUrl } from "../api/apiSlice";
+import { CastMemberCreate } from "./CastMemberCreate";
 
 const handlers = [
   rest.post(`${baseUrl}/cast_members`, async (req, res, ctx) => {
@@ -25,35 +24,19 @@ describe('CastMemberCreate', () => {
   });
 
   it('should create a castmember', async () => {
-    // renderWithProviders(<CastMemberCreate />);
-    // const name = screen.getByTestId("name");
-    // const submit = screen.getByText("Save");
+    renderWithProviders(<CastMemberCreate />);
+    const name = screen.getByTestId("name");
+    const submit = await screen.findByText("Save");
+    const type = screen.getByTestId("type");
+    fireEvent.change(name, { target: { value: "Test" } });
+    fireEvent.change(type, { target: { checked: true } });
+    fireEvent.click(submit);
+   
+    await waitFor(() => {
+      const text = screen.getByText('Save');
+      expect(text).toBeInTheDocument();
+    })
 
-    // fireEvent.change(name, { target: { value: "Test" } });
-    // await userEvent.click(submit).then(async () => {
-    //   const text = await screen.getByText('Cast Member created successfully');
-    //   expect(text).not.toBeInTheDocument();
-    // });
   });
-
-  it('should render create castmember with error', async () => {
-    // server.use(
-    //   rest.post(`${baseUrl}/cast_members`, async (req, res, ctx) => {
-    //     
-    //     return await res(ctx.status(500));
-    //   })
-    // )
-    // renderWithProviders(<CastMemberCreate />);
-    // const name = screen.getByTestId("name");
-    // const submit = screen.getByText("Save");
-
-    // fireEvent.change(name, { target: { value: "Test" } });
-    // await userEvent.click(submit).then(() => {
-    //   const text = screen.getByText('Error creating Cast Member');
-    //   screen.debug()
-    //   expect(text).not.toBeInTheDocument();
-    // });
-  })
-
 
 });

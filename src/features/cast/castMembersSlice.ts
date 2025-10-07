@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CastMember, CastMemberParams, Result, Results } from "../../types/CastMember";
+import { parseQueryParams } from "../../helpers/queryParams/queryParams";
 import { apiSlice } from "../api/apiSlice";
 
 
@@ -12,32 +13,10 @@ export const initialState: CastMember = {
     deleted_at: null
 }
 
-const endpointUrl = '/cast_members'
-
-
-function parseQueryParams(params: CastMemberParams){
-    const query = new URLSearchParams();
-    if(params.page){
-        query.append("page", params.page.toString())
-    }
-    if(params.perPage){
-        query.append("per_page", params.perPage.toString())
-    }
-    if(params.search){
-        query.append("search", params.search)
-    }
-    if(params.type){
-        query.append("type", params.type.toString());
-    }
-    return query.toString();
-}
+const endpointUrl = '/cast_members';
 
 function getCastMembers(params: CastMemberParams){
-    const {page = 1, perPage = 10, search = ""} = params
-    const url = `${endpointUrl}?${parseQueryParams(
-        {page, perPage, search}
-    )}`;
-    return url
+    return `${endpointUrl}?${parseQueryParams<CastMemberParams>(params)}`;
 }
 
 function getCastMember( {id}: { id: string}){

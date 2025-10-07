@@ -1,35 +1,19 @@
 import { Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import { useSnackbar } from 'notistack';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
 import { CastMember } from '../../types/CastMember';
-import { useCreateCastMembersMutation } from './castMembersSlice';
+import { useCreateCastMembersMutation, initialState as initialCastMemberState } from './castMembersSlice';
 import { CastMembersForm } from './components/CastMembersForm';
 
 export const CastMemberCreate = () =>  {
-  const {enqueueSnackbar} = useSnackbar();
-  const [createCastMember, status] = useCreateCastMembersMutation();
-  const [isDisabled] = useState();
-  const [castMemberState, setCastMemberState] = useState<CastMember>({
-    id: "",
-    name: "",
-    type: 1,
-    created_at: "",
-    updated_at: "",
-    deleted_at: null
-  });
+  const [createCastMember, createCastMemberStatus] = useCreateCastMembersMutation();
+  const [castMemberState, setCastMemberState] = useState<CastMember>(initialCastMemberState);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
     await createCastMember(castMemberState);
-    setCastMemberState({
-    id: "",
-    name: "",
-    type: 0,
-    created_at: "",
-    updated_at: "",
-    deleted_at: null
-  });
+    setCastMemberState(initialCastMemberState);
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,15 +27,14 @@ export const CastMemberCreate = () =>  {
     setCastMemberState({...castMemberState, [name]: type});
   };
 
-  useEffect(() => {
-    if (status.isSuccess) {
-      enqueueSnackbar('Cast Member created successfully', {variant: 'success'});
+  // useEffect is used inside the function
+  useHandleSnackbar(
+    createCastMemberStatus,
+    { 
+      successMessage: "Cast Member created successfuly", 
+      errorMessage: "Error creating Cast member"
     }
-    if (status.isError) {
-      console.log(status.error);
-      enqueueSnackbar('Error creating Cast Member', {variant: 'error'});
-    }
-  }, [status, enqueueSnackbar]);
+  );
   
   return (
     <Box>
@@ -63,8 +46,8 @@ export const CastMemberCreate = () =>  {
             </Typography>
             <CastMembersForm
               castMember={castMemberState}
-              isDisabled={status.isLoading}
-              isLoading={status.isLoading}
+              isDisabled={createCastMemberStatus.isLoading}
+              isLoading={createCastMemberStatus.isLoading}
               handleSubmit={handleSubmit}
               handleChange={handleChange}
               handleTypeChange={handleTypeChange}

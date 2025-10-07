@@ -1,43 +1,22 @@
-import { Result, Results, CategoryParams } from "../../types/Category";
+import { Result, Results, CategoryParams, Category } from "../../types/Category";
+import { parseQueryParams } from "../../helpers/queryParams/queryParams";
 import { apiSlice } from "../api/apiSlice";
 
-export interface Category {
-  id: string;
-  name: string;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-  deleted_at: null | string;
-  description: null | string;
+
+export const initialState: Category = {
+  id: "",
+  name: "",
+  created_at: "",
+  updated_at: "",
+  deleted_at: '',
+  is_active: false,
+  description: "",
 }
+
 const endpointUrl = "/categories";
 
-function parseQueryParams(params: CategoryParams) {
-  const query = new URLSearchParams();
-
-  if (params.page) {
-    query.append("page", params.page.toString());
-  }
-
-  if (params.perPage) {
-    query.append("per_page", params.perPage.toString());
-  }
-
-  if (params.search) {
-    query.append("search", params.search);
-  }
-
-  if (params.isActive) {
-    query.append("is_active", params.isActive.toString());
-  }
-
-  return query.toString();
-}
-
-function getCategories({ page = 1, perPage = 10, search = "" }) {
-  const params = { page, perPage, search, isActive: true };
-
-  return `${endpointUrl}?${parseQueryParams(params)}`;
+function getCategories(params: CategoryParams) {
+  return `${endpointUrl}?${parseQueryParams<CategoryParams>(params)}`;
 }
 
 function deleteCategoryMutation(category: Category) {

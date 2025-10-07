@@ -3,6 +3,8 @@ import { IconButton, Typography } from '@mui/material';
 import { GridColDef, GridFilterModel, GridRenderCellParams } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { BaseTable } from '../../../components/BaseTable';
+import { renderCellActions } from '../../../helpers/renderActionCell/renderCellActions';
+import { renderNameCell } from '../../../helpers/renderNameCell/renderNameCell';
 import { Results } from '../../../types/Genre';
 
 type Props = {
@@ -26,17 +28,6 @@ export function GenreTable({
     handlePageSizeChange,
     handleDelete,
 }: Props) {
-
-    function renderNameCell(row: GridRenderCellParams) {
-        return (
-            <Link
-                style={{ textDecoration: 'none' }}
-                to={`/genres/edit/${row.id}`}
-            >
-                <Typography color='primary'>{row.value}</Typography>
-            </Link>
-        );
-    }
 
     function renderIsActiveCel(row: GridRenderCellParams) {
         return (
@@ -81,7 +72,7 @@ export function GenreTable({
             field: 'name',
             headerName: 'Name',
             flex: 1,
-            renderCell: renderNameCell
+            renderCell: (row) => renderNameCell(row, 'genres')
         },
         {
             field: 'isActive',
@@ -107,7 +98,7 @@ export function GenreTable({
             headerName: 'Actions',
             type: 'string',
             flex: 0.3,
-            renderCell: rendeActionsCell
+            renderCell: (row) => renderCellActions(row, handleDelete)
         }
     ]
 

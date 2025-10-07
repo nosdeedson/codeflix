@@ -1,47 +1,31 @@
 import { Box, Paper, Typography } from '@mui/material';
-import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
-import { GenrePayload } from '../../types/Genre';
-import { GenreForm } from './componest/GenreForm';
-import { useCreateGenreMutation, useGetAllCategoriesQuery } from './GenreSlice';
+import React, { useState } from 'react';
+import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { Genre } from '../../types/Genre';
+import { GenreForm } from './components/GenreForm';
+import { initialState as initialGenreState, useCreateGenreMutation, useGetAllCategoriesQuery } from './GenreSlice';
+import { mapToGenrePayload } from './util';
 
 export const GenreCreate = () => {
-    const { enqueueSnackbar } = useSnackbar();
-    const [createGenre, status] = useCreateGenreMutation();
+    const [createGenre, genreCreateStatus] = useCreateGenreMutation();
     const { data: categories } = useGetAllCategoriesQuery();
-    const [genreState, setGenreState] = useState<GenrePayload>({
-        id: "",
-        name: "",
-        categories_id: [],
-    });
+    const [genreState, setGenreState] = useState<Genre>(initialGenreState);
 
-    useEffect(() => {
-
-        if (status.isSuccess) {
-            enqueueSnackbar('Genre created successfully', { variant: 'success' });
-        }
-        if (status.isError) {
-            enqueueSnackbar('Something went wrong', { variant: 'error' });
-        }
-    }, [status, enqueueSnackbar]);
+    useHandleSnackbar(genreCreateStatus, 
+        {successMessage: 'Genre created successfully', errorMessage: 'Something went wrong'}
+    )
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        await createGenre(genreState);
-        setGenreState({
-            id: "",
-            name: "",
-            categories_id: [],
-        })
+        const payload = mapToGenrePayload(genreState);
+        console.log(payload)
+        await createGenre(payload);
+        setGenreState(initialGenreState)
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        if (name === 'categories_id') {
-            setGenreState({ ...genreState, [name]: value as unknown as string[] });
-        } else {
-            setGenreState({ ...genreState, [name]: value });
-        }
+        setGenreState({ ...genreState, [name]: value });
     }
 
     return (
@@ -57,8 +41,8 @@ export const GenreCreate = () => {
                 <GenreForm
                     categories={categories?.data || []}
                     genre={genreState}
-                    isDisabled={status.isLoading}
-                    isLoading={status.isLoading}
+                    isDisabled={genreCreateStatus.isLoading}
+                    isLoading={genreCreateStatus.isLoading}
                     handleSubmit={handleSubmit}
                     handleChange={handleChange}
                 />

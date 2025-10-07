@@ -4,8 +4,11 @@ import { GridFilterModel } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
-import {GenreTable} from "./componest/GenreTable";
-import { useDeleleGenreMutation, useGetGenreQuery, useGetGenresQuery } from "./GenreSlice";
+import { onHandleFilterChange } from "../../helpers/handleFilterChange/handleFilterChange";
+import { useHandleSnackbar } from "../../helpers/handleSnackbar/useHandleSnackBarStatus";
+import { GenreParams } from "../../types/Genre";
+import {GenreTable} from "./components/GenreTable";
+import { useDeleleGenreMutation, useGetGenresQuery } from "./GenreSlice";
 
 const initialOptions = {
   page: 1,
@@ -18,21 +21,15 @@ export const GenreList = () => {
 
   const [options, setOptions] = useState(initialOptions);
   const [deleteGenre, deleteGenreStatus] = useDeleleGenreMutation();
-  const { data, isFetching, error } = useGetGenresQuery(options);
-
-  const { enqueueSnackbar } = useSnackbar();
+  const params: GenreParams = {page: options.page, perPage: options.perPage, search: options.search};
+  const { data, isFetching, error } = useGetGenresQuery(params);
 
   function handleOnPageChange(page: number) {
     setOptions({ ...options, page: (page + 1) });
   }
 
   function handleFilterChange(filterModel: GridFilterModel) {
-    if (filterModel.quickFilterValues?.length) {
-      const searching = filterModel.quickFilterValues?.[0];
-      setOptions({ ...options, search: searching })
-    } else {
-      setOptions({ ...options, search: "" })
-    }
+    onHandleFilterChange(filterModel, options, setOptions);
   }
 
   function handleOnPageSizeChange(perPage: number) {
@@ -43,14 +40,9 @@ export const GenreList = () => {
     await deleteGenre({id});
   }
 
-  useEffect(() => {
-    if(deleteGenreStatus.isSuccess){
-      enqueueSnackbar("Genre deleted", {variant: 'success'})
-    }
-    if(deleteGenreStatus.isError){
-      enqueueSnackbar("Error deleting Genre", {variant: 'error'})
-    }
-  }, [deleteGenreStatus, enqueueSnackbar]);
+  useHandleSnackbar(deleteGenreStatus, 
+    {successMessage: 'Genre deleted', errorMessage: 'Error deleting Genre'}
+  );
 
   if(error){
     console.log(error);
@@ -59,7 +51,8 @@ export const GenreList = () => {
 
   return (
     <Box maxWidth='lg' sx={{ mt: 4, mb: 4 }} >
-      <Box display='flex' justifyContent='flex-end' >
+      <Box display='flex' justifyContent='space-between'>
+        <Typography variant='h5' color='whitesmoke'>List Genres</Typography>
         <Button
           variant="contained"
           color="secondary"

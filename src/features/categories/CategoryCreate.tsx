@@ -1,22 +1,15 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
-import { Category, useCreateCategoryMutation } from './categorySlice';
+import React, { useState } from 'react';
+import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { Category } from '../../types/Category';
+import { initialState as initialCategoryState, useCreateCategoryMutation } from './categorySlice';
 import { CategoryForm } from './components/CategoryForm';
 
 export const CategoryCreate: any = () => {
-    const {enqueueSnackbar} = useSnackbar();
-    const [createCategory, status] = useCreateCategoryMutation();
+    const [createCategory, categoryCreatestatus] = useCreateCategoryMutation();
     const [isdisabled] = useState(false);
-    const [categoryState, setCategoryState] = useState<Category>({
-        id: "",
-        created_at: "",
-        deleted_at: "",
-        description: "",
-        is_active: false,
-        name: "",
-        updated_at: ""
-    });
+    const [categoryState, setCategoryState] = useState<Category>(initialCategoryState);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -31,27 +24,14 @@ export const CategoryCreate: any = () => {
     const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, checked} = e.target;
         setCategoryState({...categoryState, [name]: checked })
-
     };
 
-    useEffect(() => {
-        if (status.isSuccess) {
-            enqueueSnackbar("Category succefully created", { variant: "success" });
-            setCategoryState({
-                id: "",
-                created_at: "",
-                deleted_at: "",
-                description: "",
-                is_active: false,
-                name: "",
-                updated_at: ""
-            })
+    useHandleSnackbar(categoryCreatestatus,
+        {
+            successMessage: 'Category was not created',
+            errorMessage: 'Category was not created'
         }
-        if (status.isError) {
-            enqueueSnackbar("Category was not created", { variant: "error" });
-
-        }
-    }, [enqueueSnackbar, status])
+    );
 
     return (
         <Box>

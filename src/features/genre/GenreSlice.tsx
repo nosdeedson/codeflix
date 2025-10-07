@@ -1,40 +1,28 @@
-import { GenreParams, GenrePayload, Result, Results } from "../../types/Genre";
+import { Genre, GenreParams, GenrePayload, Result, Results } from "../../types/Genre";
 import { apiSlice } from "../api/apiSlice";
 import { Results as categoriesResults} from '../../types/Category'
+import { parseQueryParams } from "../../helpers/queryParams/queryParams";
 
-export const initialState: GenrePayload = {
+export const initialState: Genre = {
     id: '',
     name: '',
-    categories_id: [],
+    created_at: "",
+    updated_at: '',
+    deleted_at: null,
+    is_active: false,
+    categories: [],
+    description: "",
+    pivot: {genre_id: "", category_id: ""}
 }
 
 const endpointUrl = '/genres';
-
-function parseQueryParams(params: GenreParams) {
-    const query = new URLSearchParams();
-    if (params.page) {
-        query.append("page", params.page.toString());
-    }
-    if (params.perPage) {
-        query.append("per_page", params.perPage.toString());
-    }
-    if (params.search) {
-        query.append("search", params.search)
-    }
-    // if(params.isActive){
-    //     query.append("is_active", params.isActive.toString());
-    // }
-    return query.toString();
-}
 
 function getAllCategories() {
     return `categories?all=true`;
 }
 
 function getGenres(params: GenreParams) {
-    const { page = 1, perPage = 10, search = "", } = params;
-    const url = `${endpointUrl}?${parseQueryParams({ page, perPage, search })}`;
-    return url;
+    return `${endpointUrl}?${parseQueryParams<GenreParams>(params)}`;
 }
 
 function getGenre({ id }: { id: string }) {

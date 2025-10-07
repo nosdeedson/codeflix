@@ -2,12 +2,12 @@ import { Autocomplete, Button, FormControl, Grid, TextField } from "@mui/materia
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { Category } from "../../../types/Category"
-import { GenrePayload } from "../../../types/Genre";
+import { Genre } from "../../../types/Genre";
 
 
 type Props = {
     categories: Category[] | [];
-    genre: GenrePayload;
+    genre: Genre;
     isDisabled?: boolean;
     isLoading?: boolean;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -49,7 +49,7 @@ export function GenreForm(
                                 loading={isLoading}
                                 options={categories}
                                 isOptionEqualToValue={(option, value) => option.id === value.id}
-                                value={categories?.filter(cat => genre?.categories_id?.includes(cat.id))}
+                                value={genre.categories}
                                 disabled={isLoading}
                                 getOptionLabel={(option) => option.name}
                                 renderOption={(props, option) => (
@@ -59,7 +59,7 @@ export function GenreForm(
                                 )}
                                 onChange={(e, newValue) => {
                                     handleChange({
-                                        target: { name: 'categories_id', value: newValue.map(c => c.id) }
+                                        target: { name: 'categories', value: newValue.map(c => c) }
                                     } as any)
                                 }}
                                 sx={{ width: '100%' }}

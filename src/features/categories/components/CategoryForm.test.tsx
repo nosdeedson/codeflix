@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import { wrap } from "module";
 import { BrowserRouter } from "react-router-dom";
 import { CategoryForm } from "./CategoryForm";
 
@@ -11,7 +10,7 @@ const Props = {
         name: "Teste",
         description: "Teste",
         is_active: true,
-        deleted_at: null,
+        deleted_at: '',
         created_at: "2021-10-01T00:00:00.000000Z",
         updated_at: "2021-10-01T00:00:00.000000Z",
     },
@@ -24,7 +23,6 @@ const Props = {
 
 
 describe('CategoryForm', () => {
-
 
     it('should render categoryForm', () => {
         const {asFragment} = render(<CategoryForm {...Props} />, {wrapper: BrowserRouter})

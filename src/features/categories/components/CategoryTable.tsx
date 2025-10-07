@@ -3,6 +3,8 @@ import { IconButton, Typography } from '@mui/material';
 import { GridColDef, GridFilterModel, GridRenderCellParams } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { BaseTable } from '../../../components/BaseTable';
+import { renderCellActions } from '../../../helpers/renderActionCell/renderCellActions';
+import { renderNameCell } from '../../../helpers/renderNameCell/renderNameCell';
 import { Results } from '../../../types/Category';
 
 type Props = {
@@ -28,30 +30,6 @@ export function CategoryTable({
     handleDelete
 }: Props) {
 
-        function renderNameCell(row: GridRenderCellParams) {
-        return (
-            <Link
-                style={{ textDecoration: 'none' }}
-                to={`/categories/edit/${row.id}`}
-            >
-                <Typography color="primary">{row.value}</Typography>
-            </Link>
-        );
-    }
-
-    function renderActionsCell(row: GridRenderCellParams) {
-        return (
-            <IconButton
-                aria-label="delete"
-                color='secondary'
-                onClick={() => handleDelete(row.value)}
-
-            >
-                <DeleteIcon />
-            </IconButton>
-        );
-    }
-
     function renderIsActiveCel(row: GridRenderCellParams) {
         return (
             <Typography color={row.value ? "primary" : 'secondary'}>
@@ -61,8 +39,8 @@ export function CategoryTable({
     }
 
 
-    const mapDataToGridRows = (data: Results) => 
-        data.data.map( (it) => ({
+    const mapDataToGridRows = (data: Results) =>
+        data.data.map((it) => ({
             id: it.id,
             name: it.name,
             description: it.description,
@@ -76,7 +54,7 @@ export function CategoryTable({
             field: 'name',
             headerName: 'Name',
             flex: 1,
-            renderCell: renderNameCell
+            renderCell: (row) => renderNameCell(row, 'categories')
         },
         {
             field: 'description',
@@ -101,7 +79,7 @@ export function CategoryTable({
             headerName: 'Actions',
             type: 'string',
             flex: 1,
-            renderCell: renderActionsCell
+            renderCell: (row) => renderCellActions(row, handleDelete)
         },
     ];
 

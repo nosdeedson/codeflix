@@ -3,6 +3,9 @@ import { GridFilterModel } from '@mui/x-data-grid';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { onHandleFilterChange } from '../../helpers/handleFilterChange/handleFilterChange';
+import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { CategoryParams } from '../../types/Category';
 import { useDeleteCategoryMutation, useGetCategoriesQuery } from './categorySlice';
 import { CategoryTable } from './components/CategoryTable';
 
@@ -17,7 +20,9 @@ export const CategoryList: any = () => {
     const [options, setOptions] = useState(initialOptions);
     const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
     
-    const { data, isFetching, error } = useGetCategoriesQuery(options);
+    const params: CategoryParams = {page: options.page, perPage: options.perPage, search: options.search}
+
+    const { data, isFetching, error } = useGetCategoriesQuery(params);
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -26,12 +31,7 @@ export const CategoryList: any = () => {
     }
 
     function handleFilterChange(filterModel: GridFilterModel) {
-        if( filterModel.quickFilterValues?.length) {
-            const searching = filterModel?.quickFilterValues?.[0];
-            setOptions({...options, search: searching});
-        } else {
-           setOptions({...options, search: ""});
-        }
+        onHandleFilterChange(filterModel, options, setOptions);
     }
 
     function handleOnPageSizeChange(perPage: number) {
@@ -52,6 +52,10 @@ export const CategoryList: any = () => {
         
     }, [deleteCategoryStatus, enqueueSnackbar]);
 
+    useHandleSnackbar(deleteCategoryStatus, 
+        {successMessage: 'Category deleted', errorMessage: 'Error while deleting category'}
+    )
+
     if(error){
         console.log(error);
         return <Typography variant='h2' color={'whitesmoke'}>Something went wrong!!</Typography>
@@ -59,7 +63,8 @@ export const CategoryList: any = () => {
 
     return (
         <Box maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Box display='flex' justifyContent='flex-end'>
+            <Box display='flex' justifyContent='space-between'>
+                <Typography variant='h5' color='whitesmoke'>List Categories</Typography>
                 <Button
                     variant="contained"
                     color="secondary"
