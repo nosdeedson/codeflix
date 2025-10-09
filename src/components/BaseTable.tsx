@@ -41,7 +41,7 @@ export function BaseTable<T>({
     const rows: GridRowsProp = data ? mapDataToGridRows(data): [];
 
   return (
-    <Box sx={{display: 'flex', height: 375}} >
+    <Box sx={{display: 'flex', height: 500}} >
         <DataGrid
         components={{Toolbar: GridToolbar}}
         columns={columns} 

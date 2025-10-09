@@ -14,6 +14,9 @@ import { CastMemberEdit } from './features/cast/CastMemberEdit';
 import { GenreList } from './features/genre/GenreList';
 import { GenreEdit } from './features/genre/GenreEdit';
 import { GenreCreate } from './features/genre/GenreCreate';
+import { VideoList } from './features/video/VideoList';
+import { VideoCreate } from './features/video/VideoCreate';
+import { VideoEdit } from './features/video/VideoEdit';
 
 function App() {
   return (<ThemeProvider theme={appTheme}>
@@ -26,12 +29,12 @@ function App() {
       <Box
         component="main"
         sx={{
-          height: "100vh",
+          minHeight: "100vh",
           backgroundColor: (theme) => theme.palette.grey[900]
         }}
       >
         <Header ></Header>
-        <Layout >
+        <Layout  >
           <Routes>
 
             {/*categories */}
@@ -50,6 +53,12 @@ function App() {
             <Route path='genres/create' element={<GenreCreate/>}></Route>
             <Route path='genres/edit/:id' element={<GenreEdit/>}></Route>
 
+            {/* Videos */}
+            <Route path='videos' element={<VideoList/>}></Route>
+            <Route path='videos/create' element={<VideoCreate/>}></Route>
+            <Route path='Videos/edit/:id' element={<VideoEdit/>}></Route>
+
+            
             {/* 404 */}
             <Route path='*'
               element={

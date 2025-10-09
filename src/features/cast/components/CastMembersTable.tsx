@@ -1,6 +1,5 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, Typography } from '@mui/material';
-import { GridColDef, GridFilterModel, GridRenderCellParams, renderActionsCell } from '@mui/x-data-grid';
+import { Typography } from '@mui/material';
+import { GridColDef, GridFilterModel, GridRenderCellParams } from '@mui/x-data-grid';
 import { BaseTable } from '../../../components/BaseTable';
 import { renderCellActions } from '../../../helpers/renderActionCell/renderCellActions';
 import { renderNameCell } from '../../../helpers/renderNameCell/renderNameCell';

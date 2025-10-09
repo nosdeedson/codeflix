@@ -3,10 +3,8 @@ import React from 'react'
 
 export function Layout({children}: {children : React.ReactNode}) {
   return (
-    <Box sx={{display: 'flex'}}>
-        <Container  
-        maxWidth='lg' 
-        sx={{mt: 4, mb: 4}}>
+    <Box  >
+        <Container maxWidth='lg' sx={{py: 2}} >
             {children}
         </Container>
     </Box>

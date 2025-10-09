@@ -1,12 +1,11 @@
 import { Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
 import { Genre } from '../../types/Genre';
 import { GenreForm } from './components/GenreForm';
-import { useGetAllCategoriesQuery, useGetGenreQuery, useUpdateGenreMutation, initialState as initialGenreState } from './GenreSlice';
+import { initialState as initialGenreState, useGetAllCategoriesQuery, useGetGenreQuery, useUpdateGenreMutation } from './GenreSlice';
 import { mapToGenrePayload } from './util';
 
 export const GenreEdit = () => {

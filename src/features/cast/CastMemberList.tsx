@@ -1,7 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { GridFilterModel } from '@mui/x-data-grid';
-import { useSnackbar } from 'notistack';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { onHandleFilterChange } from '../../helpers/handleFilterChange/handleFilterChange';
 import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';

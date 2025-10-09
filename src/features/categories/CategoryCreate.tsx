@@ -1,5 +1,4 @@
 import { Box, Paper, Typography } from '@mui/material';
-import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
 import { Category } from '../../types/Category';

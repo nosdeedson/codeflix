@@ -1,7 +1,5 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { GridColDef, GridFilterModel, GridRenderCellParams } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
 import { BaseTable } from '../../../components/BaseTable';
 import { renderCellActions } from '../../../helpers/renderActionCell/renderCellActions';
 import { renderNameCell } from '../../../helpers/renderNameCell/renderNameCell';
@@ -36,18 +34,7 @@ export function GenreTable({
             </Typography>
         );
     }
-
-    function rendeActionsCell(row: GridRenderCellParams) {
-        return (
-            <IconButton
-                color='secondary'
-                onClick={() => handleDelete(row.value)}
-            >
-                <DeleteIcon />
-            </IconButton>
-        );
-    }
-
+    
     function renderCategories(row: GridRenderCellParams) {
         return (
             <Typography>
