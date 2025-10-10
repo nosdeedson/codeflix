@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material';
 import { GridColDef, GridFilterModel, GridRenderCellParams } from '@mui/x-data-grid';
 import { BaseTable } from '../../../components/BaseTable';
-import { renderCellActions } from '../../../helpers/renderActionCell/renderCellActions';
-import { renderNameCell } from '../../../helpers/renderNameCell/renderNameCell';
+import { RenderCellActions } from '../../../helpers/renderActionCell/RenderCellActions';
+import { RenderNameCell } from '../../../helpers/renderNameCell/RenderNameCell';
 import { Results } from '../../../types/Genre';
 
 type Props = {
@@ -59,7 +59,7 @@ export function GenreTable({
             field: 'name',
             headerName: 'Name',
             flex: 1,
-            renderCell: (row) => renderNameCell(row, 'genres')
+            renderCell: (row) => RenderNameCell(row, 'genres')
         },
         {
             field: 'isActive',
@@ -85,7 +85,7 @@ export function GenreTable({
             headerName: 'Actions',
             type: 'string',
             flex: 0.3,
-            renderCell: (row) => renderCellActions(row, handleDelete)
+            renderCell: (row) => RenderCellActions(row, handleDelete)
         }
     ]
 

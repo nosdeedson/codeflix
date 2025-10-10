@@ -1,10 +1,8 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { GridColDef, GridFilterModel, GridRenderCellParams } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
 import { BaseTable } from '../../../components/BaseTable';
-import { renderCellActions } from '../../../helpers/renderActionCell/renderCellActions';
-import { renderNameCell } from '../../../helpers/renderNameCell/renderNameCell';
+import { RenderCellActions } from '../../../helpers/renderActionCell/RenderCellActions';
+import { RenderNameCell } from '../../../helpers/renderNameCell/RenderNameCell';
 import { Results } from '../../../types/Category';
 
 type Props = {
@@ -54,7 +52,7 @@ export function CategoryTable({
             field: 'name',
             headerName: 'Name',
             flex: 1,
-            renderCell: (row) => renderNameCell(row, 'categories')
+            renderCell: (row) => RenderNameCell(row, 'categories')
         },
         {
             field: 'description',
@@ -79,7 +77,7 @@ export function CategoryTable({
             headerName: 'Actions',
             type: 'string',
             flex: 1,
-            renderCell: (row) => renderCellActions(row, handleDelete)
+            renderCell: (row) => RenderCellActions(row, handleDelete)
         },
     ];
 

@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material';
 import { GridColDef, GridFilterModel, GridRenderCellParams } from '@mui/x-data-grid';
 import { BaseTable } from '../../../components/BaseTable';
-import { renderCellActions } from '../../../helpers/renderActionCell/renderCellActions';
-import { renderNameCell } from '../../../helpers/renderNameCell/renderNameCell';
+import { RenderCellActions } from '../../../helpers/renderActionCell/RenderCellActions';
+import { RenderNameCell } from '../../../helpers/renderNameCell/RenderNameCell';
 import { Results } from '../../../types/CastMember';
 
 
@@ -49,7 +49,7 @@ export function CastMembersTable({
             field: 'name',
             headerName: 'Name',
             flex: 1,
-            renderCell: (row) => renderNameCell(row, 'cast-members')
+            renderCell: (row) => RenderNameCell(row, 'cast-members')
         },
         {
             field: 'type',
@@ -61,7 +61,7 @@ export function CastMembersTable({
             field: 'id',
             headerName: 'Actions',
             flex: 1,
-            renderCell: (row) => renderCellActions(row, handleDelete)
+            renderCell: (row) => RenderCellActions(row, handleDelete)
         }
     ]
 

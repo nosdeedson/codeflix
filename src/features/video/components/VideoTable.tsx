@@ -1,19 +1,19 @@
-import { Typography } from "@mui/material";
-import { GridColDef, GridFilterModel, GridRenderCellParams } from "@mui/x-data-grid";
+import { GridColDef, GridFilterModel } from "@mui/x-data-grid";
 import { BaseTable } from "../../../components/BaseTable";
-import { renderCellActions } from "../../../helpers/renderActionCell/renderCellActions";
-import { renderNameCell } from "../../../helpers/renderNameCell/renderNameCell";
-import { Results } from "../../../types/Video"
+import { FormatEntitiesName } from "../../../helpers/formatEntitiesName/FormatEntitiesName";
+import { RenderCellActions } from "../../../helpers/renderActionCell/RenderCellActions";
+import { RenderNameCell } from "../../../helpers/renderNameCell/RenderNameCell";
+import { Results } from "../../../types/Video";
 
 type Props = {
     data: Results | undefined;
-    perPage: number;
-    isFetching: boolean;
-    rowsPerPage: number[];
+    handleDelete: (id: string) => void;
+    handleFilterChange: (filterModel: GridFilterModel) => void;
     handleOnPageChange: (page: number) => void;
     handlePageSizeChange: (perPage: number) => void;
-    handleFilterChange: (filterModel: GridFilterModel) => void;
-    handleDelete: (id: string) => void;
+    isFetching: boolean;
+    perPage: number;
+    rowsPerPage: number[];
 }
 
 export function VideoTable({
@@ -26,30 +26,6 @@ export function VideoTable({
     handleFilterChange,
     handleDelete
 }: Props) {
-
-    function renderCategories(row: GridRenderCellParams){
-        return(
-            <Typography>
-                {row.value?.map((c: {name: string}) => c.name).join(', ') || ''};
-            </Typography>
-        );
-    }
-
-    function renderGenres(row: GridRenderCellParams){
-        return (
-            <Typography>
-                {row.value?.map((g: { name: string}) => g.name).join(', ') || ''}
-            </Typography>
-        )
-    }
-
-    function renderCastMembers(row: GridRenderCellParams){
-        return (
-            <Typography>
-                {row.value?.map( (c: { name: string}) => c.name).join(', ') || ''};
-            </Typography>
-        )
-    }
 
     const mapDataToGridRows = (data: Results) => {
         return data.data.map((it) => ({
@@ -67,25 +43,25 @@ export function VideoTable({
             field: 'title',
             headerName: 'Title',
             flex: 1,
-            renderCell: (row) => renderNameCell(row, 'videos')
+            renderCell: (row) => RenderNameCell(row, 'videos')
         },
         {
             field: 'categories',
             headerName: 'Categories',
             flex: 1,
-            renderCell: renderCategories
+            renderCell: (row) => FormatEntitiesName(row) //renderCategories
         },
         {
             field: 'castMembers',
             headerName: 'Cast Members',
             flex: 1,
-            renderCell: renderCastMembers,
+            renderCell: (row) => FormatEntitiesName(row),
         },
         {
             field: 'genres',
             headerName: 'Genres',
             flex: 1,
-            renderCell: renderGenres
+            renderCell: (row) => FormatEntitiesName(row)
         },
         {
             field: 'createdAt',
@@ -98,12 +74,12 @@ export function VideoTable({
             headerName: 'Actions',
             type: 'string',
             flex: 0.3,
-            renderCell: (row) => renderCellActions(row, handleDelete)
+            renderCell: (row) => RenderCellActions(row, handleDelete)
         }
     ];
 
     return (
-        <BaseTable 
+        <BaseTable
             data={data}
             mapDataToGridRows={mapDataToGridRows}
             columns={columns}

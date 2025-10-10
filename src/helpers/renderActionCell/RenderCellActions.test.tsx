@@ -1,14 +1,14 @@
 import { GridRenderCellParams } from "@mui/x-data-grid";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { renderCellActions } from "./renderCellActions";
+import { RenderCellActions } from "./RenderCellActions";
 
 jest.mock("@mui/icons-material/Delete", () => () => <svg data-testid="delete-icon" />);
 
-describe('renderNameActions', () => {
+describe('RenderNameActions', () => {
     it('should call handleDelete when button clicked', () => {
         const mockHandleDelete = jest.fn();
         const mockRow = { value: "123" } as unknown as GridRenderCellParams;
-        render(renderCellActions(mockRow, mockHandleDelete));
+        render(RenderCellActions(mockRow, mockHandleDelete));
 
         const button = screen.getByRole('button');
         fireEvent.click(button);
@@ -20,7 +20,7 @@ describe('renderNameActions', () => {
         const mockHandleDelete = jest.fn();
         const mockRow = { value: "456" } as unknown as GridRenderCellParams;
 
-        render(renderCellActions(mockRow, mockHandleDelete));
+        render(RenderCellActions(mockRow, mockHandleDelete));
 
         expect(screen.getByTestId("delete-icon")).toBeInTheDocument();
     });

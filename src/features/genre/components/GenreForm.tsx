@@ -1,6 +1,7 @@
 import { Autocomplete, Button, FormControl, Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
+import { AutoCompleteFields } from "../../../components/AutoCompleteFields";
 import { Category } from "../../../types/Category"
 import { Genre } from "../../../types/Genre";
 
@@ -44,26 +45,14 @@ export function GenreForm(
                     </Grid>
                     <Grid item xs={12}>
                         <FormControl fullWidth>
-                            <Autocomplete
-                                multiple
-                                loading={isLoading}
+                            <AutoCompleteFields
+                                isLoading={isLoading}
+                                isDisabled={isDisabled}
                                 options={categories}
-                                isOptionEqualToValue={(option, value) => option.id === value.id}
-                                value={genre.categories}
-                                disabled={isLoading}
-                                getOptionLabel={(option) => option.name}
-                                renderOption={(props, option) => (
-                                    <li {...props} key={option.id}>
-                                        {option.name}
-                                    </li>
-                                )}
-                                onChange={(e, newValue) => {
-                                    handleChange({
-                                        target: { name: 'categories', value: newValue.map(c => c) }
-                                    } as any)
-                                }}
-                                sx={{ width: '100%' }}
-                                renderInput={(params) => <TextField {...params} label="Categories" />}
+                                values={genre.categories}
+                                label="Categories"
+                                name="categories"
+                                handleChange={handleChange}
                             />
                         </FormControl>
                     </Grid>

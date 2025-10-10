@@ -2,6 +2,7 @@ import { Autocomplete, Button, Checkbox, FormControl, FormControlLabel, FormLabe
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AutoCompleteFields } from '../../../components/AutoCompleteFields'
 import { InputFile } from '../../../components/InputFile'
 import { RatingsList } from '../../../components/RatingsList'
 import { CastMember } from '../../../types/CastMember'
@@ -35,7 +36,7 @@ export function VideoForm(
 
     const [filterCategories, setFilteredCategories] = useState<Category[]>(categories);
 
-    function handleGenreChanged(genres: Genre[]) {
+    function handleGenreChanged( _e: React.SyntheticEvent<Element, Event>, genres: Genre[]) {
         handleChange({
             target: {name: "genres", value: genres.map(g => g)}
         }as any);
@@ -125,25 +126,14 @@ export function VideoForm(
 
                         <Grid item xs={12} p={1}>
                             <FormControl fullWidth>
-                                <Autocomplete
-                                    multiple
-                                    loading={isLoading}
+                                <AutoCompleteFields
+                                    isLoading={isLoading}
+                                    isDisabled={isDisabled}
                                     options={castMembers}
-                                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                                    value={video.cast_members}
-                                    disabled={isLoading}
-                                    getOptionLabel={(option) => option.name}
-                                    renderOption={(props, option) => (
-                                        <li {...props} key={option.id}>
-                                            {option.name}
-                                        </li>
-                                    )}
-                                    onChange={(e, newValue) => {
-                                        handleChange({
-                                            target: { name: 'cast_members', value: newValue.map(cm => cm) }
-                                        } as any)
-                                    }}
-                                    renderInput={(params) => <TextField {...params} label="Cast Members" />}
+                                    values={video.cast_members}
+                                    label="Cast Memberes"
+                                    name='cast_members'
+                                    handleChange={handleChange}
                                 />
                             </FormControl>
                         </Grid>
@@ -151,46 +141,28 @@ export function VideoForm(
                         <Grid container spacing={1} p={1}>
                             <Grid item xs={12} md={6}>
                                 <FormControl fullWidth>
-                                    <Autocomplete
-                                        multiple
-                                        loading={isLoading}
+                                    <AutoCompleteFields
+                                        isLoading={isLoading}
+                                        isDisabled={isDisabled}
                                         options={genres}
-                                        isOptionEqualToValue={(option, value) => option.id === value.id}
-                                        value={video.genres}
-                                        disabled={isLoading}
-                                        getOptionLabel={(option) => option.name}
-                                        renderOption={(props, option) => (
-                                            <li {...props} key={option.id}>
-                                                {option.name}
-                                            </li>
-                                        )}
-                                        onChange={(_e, newValue) => {handleGenreChanged(newValue)}}
-                                        renderInput={(params) => <TextField {...params} label="Genres" />}
+                                        values={video.genres}
+                                        label='Genres'
+                                        name='genres'
+                                        handleChange={(e) => handleGenreChanged(null as any, e.target.value as any)}
                                     />
                                 </FormControl>
                             </Grid>
 
                             <Grid item xs={12} md={6} >
                                 <FormControl fullWidth>
-                                    <Autocomplete
-                                        multiple
-                                        loading={isLoading}
+                                    <AutoCompleteFields
+                                        isLoading={isLoading}
+                                        isDisabled={isDisabled}
                                         options={filterCategories}
-                                        isOptionEqualToValue={(option, value) => option.id === value.id}
-                                        value={video.categories}
-                                        disabled={video.genres.length === 0}
-                                        getOptionLabel={(option) => option.name}
-                                        renderOption={(props, option) => (
-                                            <li {...props} key={option.id}>
-                                                {option.name}
-                                            </li>
-                                        )}
-                                        onChange={(e, newValue) => {
-                                            handleChange({
-                                                target: { name: 'categories', value: newValue.map(c => c) }
-                                            } as any);
-                                        }}
-                                        renderInput={(params) => <TextField {...params} label="Categories" />}
+                                        values={video.categories}
+                                        label='Categories'
+                                        name='categories'
+                                        handleChange={handleChange}
                                     />
                                 </FormControl>
                             </Grid>

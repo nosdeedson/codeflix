@@ -57,7 +57,7 @@ export const GenreList = () => {
           variant="contained"
           color="secondary"
           component={Link}
-          to='/videos/create'
+          to='/genres/create'
           style={{ marginBottom: '1rem' }}
         >
           New Genre
