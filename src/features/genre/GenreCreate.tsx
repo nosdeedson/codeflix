@@ -1,6 +1,6 @@
 import { Box, Paper, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { Genre } from '../../types/Genre';
 import { GenreForm } from './components/GenreForm';
 import { initialState as initialGenreState, useCreateGenreMutation, useGetAllCategoriesQuery } from './GenreSlice';

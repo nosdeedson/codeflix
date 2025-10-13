@@ -1,15 +1,6 @@
 import { useSnackbar } from "notistack";
 import { useEffect } from "react";
-
-interface MutationStatus {
-    isSuccess: boolean,
-    isError: boolean
-}
-
-interface SnackbarStatusOption {
-    successMessage: string;
-    errorMessage: string;
-}
+import { MutationStatus, SnackbarStatusOption } from "./types";
 
 /**
  * custom hook to show snackbar message

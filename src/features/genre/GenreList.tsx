@@ -1,13 +1,12 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { GridFilterModel } from "@mui/x-data-grid";
-import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react"
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { onHandleFilterChange } from "../../helpers/handleFilterChange/handleFilterChange";
-import { useHandleSnackbar } from "../../helpers/handleSnackbar/useHandleSnackBarStatus";
+import { useHandleSnackbar } from "../../hooks/handleSnackbar/useHandleSnackBarStatus";
 import { GenreParams } from "../../types/Genre";
-import {GenreTable} from "./components/GenreTable";
+import { GenreTable } from "./components/GenreTable";
 import { useDeleleGenreMutation, useGetGenresQuery } from "./GenreSlice";
 
 const initialOptions = {

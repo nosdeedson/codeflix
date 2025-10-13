@@ -1,6 +1,6 @@
 import { Box, Paper, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { Category } from '../../types/Category';
 import { initialState as initialCategoryState, useCreateCategoryMutation } from './categorySlice';
 import { CategoryForm } from './components/CategoryForm';

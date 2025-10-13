@@ -4,7 +4,7 @@ import { GridFilterModel } from "@mui/x-data-grid";
 import { useState } from "react"
 import { Link } from "react-router-dom";
 import { onHandleFilterChange } from "../../helpers/handleFilterChange/handleFilterChange";
-import { useHandleSnackbar } from "../../helpers/handleSnackbar/useHandleSnackBarStatus";
+import { useHandleSnackbar } from "../../hooks/handleSnackbar/useHandleSnackBarStatus";
 import { VideoParams } from "../../types/Video";
 import { VideoTable } from "./components/VideoTable";
 import { useDeleteVideoMutation, useGetVideosQuery } from "./VideoSlice";

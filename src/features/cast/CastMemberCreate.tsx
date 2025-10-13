@@ -1,7 +1,7 @@
 import { Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
-import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { CastMember } from '../../types/CastMember';
 import { useCreateCastMembersMutation, initialState as initialCastMemberState } from './castMembersSlice';
 import { CastMembersForm } from './components/CastMembersForm';

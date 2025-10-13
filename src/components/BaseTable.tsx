@@ -16,8 +16,6 @@ type BaseTableProps<T> ={
     handleOnPageSizeChange: (perPage: number) => void;
 }
 
-
-
 export function BaseTable<T>({
     data,
     mapDataToGridRows,
@@ -41,7 +39,7 @@ export function BaseTable<T>({
     const rows: GridRowsProp = data ? mapDataToGridRows(data): [];
 
   return (
-    <Box sx={{display: 'flex', height: 500}} >
+    <Box sx={{display: 'flex', height: 450}} >
         <DataGrid
         components={{Toolbar: GridToolbar}}
         columns={columns} 

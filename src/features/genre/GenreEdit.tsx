@@ -2,7 +2,7 @@ import { Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { Genre } from '../../types/Genre';
 import { GenreForm } from './components/GenreForm';
 import { initialState as initialGenreState, useGetAllCategoriesQuery, useGetGenreQuery, useUpdateGenreMutation } from './GenreSlice';

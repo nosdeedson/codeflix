@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { onHandleFilterChange } from '../../helpers/handleFilterChange/handleFilterChange';
-import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { CategoryParams } from '../../types/Category';
 import { useDeleteCategoryMutation, useGetCategoriesQuery } from './categorySlice';
 import { CategoryTable } from './components/CategoryTable';
@@ -62,9 +62,9 @@ export const CategoryList: any = () => {
     }
 
     return (
-        <Box maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Box maxWidth="lg">
             <Box display='flex' justifyContent='space-between'>
-                <Typography variant='h5' color='whitesmoke'>List Categories</Typography>
+                <Typography variant='h5' >List Categories</Typography>
                 <Button
                     variant="contained"
                     color="secondary"

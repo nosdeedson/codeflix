@@ -8,7 +8,7 @@ export function RenderNameCell(row: GridRenderCellParams, baseUrl: string) {
             style={{ textDecoration: 'none' }}
             to={`/${baseUrl}/edit/${row.id}`}
         >
-            <Typography color="primary">{row.value}</Typography>
+            <Typography color='primary' >{row.value}</Typography>
         </Link>
     );
 }

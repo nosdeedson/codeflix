@@ -1,9 +1,9 @@
-import { Box, Paper, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react';
-import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { Box, Paper, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { Video } from '../../types/Video';
 import { mapToVideoPayload } from '../genre/util';
-import { VideoForm } from './components/VideoForm'
+import { VideoForm } from './components/VideoForm';
 import { initialState as initialVideoState, useCreateVideoMutation, useGetAllCastMembersQuery, useGetAllCategoriesQuery, useGetAllGenresQuery } from './VideoSlice';
 
 export const VideoCreate = () => {

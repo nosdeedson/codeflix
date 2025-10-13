@@ -3,7 +3,7 @@ import { GridFilterModel } from '@mui/x-data-grid';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { onHandleFilterChange } from '../../helpers/handleFilterChange/handleFilterChange';
-import { useHandleSnackbar } from '../../helpers/handleSnackbar/useHandleSnackBarStatus';
+import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { CastMemberParams } from '../../types/CastMember';
 import { useDeleteCastMembersMutation, useGetCastMembersQuery } from './castMembersSlice';
 import { CastMembersTable } from './components/CastMembersTable';
