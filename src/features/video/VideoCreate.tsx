@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
-import { Video } from '../../types/Video';
+import { FileObject, Video } from '../../types/Video';
 import { mapToVideoPayload } from '../genre/util';
 import { VideoForm } from './components/VideoForm';
 import { initialState as initialVideoState, useCreateVideoMutation, useGetAllCastMembersQuery, useGetAllCategoriesQuery, useGetAllGenresQuery } from './VideoSlice';
@@ -12,6 +12,9 @@ export const VideoCreate = () => {
   const {data: genres} = useGetAllGenresQuery();
   const {data: castMembers} = useGetAllCastMembersQuery();
   const [videoState, setVideoState] = useState<Video>(initialVideoState);
+  const [selectedFiles, setSelectedFiles] = useState<FileObject[]>([]);
+
+  console.log(selectedFiles)
 
   useHandleSnackbar(
     videoCreateStatus,
@@ -33,6 +36,14 @@ export const VideoCreate = () => {
     setVideoState({...videoState, [name]: value})
   }
 
+  async function handleAddFile({name, file}: FileObject){
+    setSelectedFiles([...selectedFiles, {name, file}]);
+  }
+
+  async function handleRemoveFile(name: string){
+    setSelectedFiles(selectedFiles.filter(it => it.name !== name))
+  }
+
   return (
     <Box >
       <Paper>
@@ -50,6 +61,8 @@ export const VideoCreate = () => {
         isLoading={videoCreateStatus.isLoading}
         handleSubmit={handleSubimt}
         handleChange={handleChange}
+        handleAddFile={handleAddFile}
+        handleRemoveFile={handleRemoveFile}
         />
       </Paper>
     </Box>

@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus'
-import { Video } from '../../types/Video'
+import { FileObject, Video } from '../../types/Video'
 import { mapToVideoPayload } from '../genre/util'
 import { VideoForm } from './components/VideoForm'
 import { initialState as initialVideoState, useGetAllCastMembersQuery, useGetAllCategoriesQuery, useGetAllGenresQuery, useGetVideoQuery, useUpdateVideoMutation } from './VideoSlice'
@@ -17,6 +17,9 @@ export const VideoEdit = ( ) => {
   const {data: genres} = useGetAllGenresQuery();
   const {data: castMembers} = useGetAllCastMembersQuery();
   const [videoState, setVideoState] = useState<Video>(initialVideoState);
+  const [selectedFiles, setSelectedFiles] = useState<FileObject[]>([]);
+
+  console.log(selectedFiles);
 
   useHandleSnackbar(
     videoUpdateStatus,
@@ -36,6 +39,14 @@ export const VideoEdit = ( ) => {
   async function handleChange(e: React.ChangeEvent<HTMLInputElement>){
     const {name, value} = e.target;
     setVideoState({...videoState, [name]: value})
+  }
+
+  async function handleAddFile({name, file}: FileObject){
+    setSelectedFiles([...selectedFiles, {name, file}]);
+  }
+
+  async function handleRemoveFile(name: string){
+    setSelectedFiles(selectedFiles.filter(it => it.name !== name))
   }
 
   useEffect(() =>{
@@ -60,6 +71,8 @@ export const VideoEdit = ( ) => {
           isLoading={videoUpdateStatus.isLoading}
           handleSubmit={handleSubimt}
           handleChange={handleChange}
+          handleAddFile={handleAddFile}
+          handleRemoveFile={handleRemoveFile}
           />
         </Box>
       </Paper>
