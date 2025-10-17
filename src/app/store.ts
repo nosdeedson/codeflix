@@ -6,6 +6,7 @@ import { castMembersApiSlice } from '../features/cast/castMembersSlice';
 import { genreApiSlice } from '../features/genre/GenreSlice';
 import { videoApiSlice } from '../features/video/VideoSlice';
 import { uploadReducer } from '../features/uploads/UploadSlice';
+import { uploadQueue } from '../middleware/uploadQueue';
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
@@ -24,6 +25,7 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
       getDefaultMiddleware({
         serializableCheck: false
       })
+        .prepend(uploadQueue.middleware)
         .concat(
           apiSlice.middleware,
         ),
