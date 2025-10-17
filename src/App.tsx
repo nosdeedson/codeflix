@@ -16,8 +16,16 @@ import { VideoEdit } from './features/video/VideoEdit';
 import { VideoList } from './features/video/VideoList';
 
 import "./App.css";
+import { UploadList } from './features/uploads/UploadList';
 
 function App() {
+
+  const uploads = [
+          {name: 'upload 1', progress: 10},
+          {name: 'upload 2', progress: 10},
+          {name: 'upload 3', progress: 10},
+          {name: 'upload 4', progress: 10}
+        ];
 
   return (
     <Layout>
@@ -56,6 +64,7 @@ function App() {
         ></Route>
 
       </Routes>
+      <UploadList/>
     </Layout>
 
   )

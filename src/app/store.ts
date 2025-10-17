@@ -5,6 +5,7 @@ import { categoriesApiSlice } from "../features/categories/categorySlice";
 import { castMembersApiSlice } from '../features/cast/castMembersSlice';
 import { genreApiSlice } from '../features/genre/GenreSlice';
 import { videoApiSlice } from '../features/video/VideoSlice';
+import { uploadReducer } from '../features/uploads/UploadSlice';
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   [castMembersApiSlice.reducerPath]: apiSlice.reducer,
   [genreApiSlice.reducerPath]: apiSlice.reducer,
   [videoApiSlice.reducerPath]: apiSlice.reducer,
+  uploadSlice: uploadReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
@@ -19,9 +21,12 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
     reducer: rootReducer,
     preloadedState,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(
-        apiSlice.middleware,
-      ),
+      getDefaultMiddleware({
+        serializableCheck: false
+      })
+        .concat(
+          apiSlice.middleware,
+        ),
   })
 };
 

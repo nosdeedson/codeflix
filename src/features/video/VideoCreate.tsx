@@ -1,8 +1,11 @@
 import { Box, Paper, Typography } from '@mui/material';
+import { nanoid } from '@reduxjs/toolkit';
 import React, { useState } from 'react';
+import { useAppDispatch } from '../../app/hooks';
 import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { FileObject, Video } from '../../types/Video';
 import { mapToVideoPayload } from '../genre/util';
+import { addUpload } from '../uploads/UploadSlice';
 import { VideoForm } from './components/VideoForm';
 import { initialState as initialVideoState, useCreateVideoMutation, useGetAllCastMembersQuery, useGetAllCategoriesQuery, useGetAllGenresQuery } from './VideoSlice';
 
@@ -14,6 +17,7 @@ export const VideoCreate = () => {
   const [videoState, setVideoState] = useState<Video>(initialVideoState);
   const [selectedFiles, setSelectedFiles] = useState<FileObject[]>([]);
 
+  const dispatch = useAppDispatch();
   console.log(selectedFiles)
 
   useHandleSnackbar(
@@ -24,11 +28,32 @@ export const VideoCreate = () => {
     }
   );
 
+  async function handleSubmitUploads(videoId: string) {
+    selectedFiles.forEach(({file, name}) => {
+      const payload = { id: nanoid(), file, videoId, field: name};
+      dispatch(addUpload(payload));
+    })
+  }
+
   async function handleSubimt(e: React.FormEvent<HTMLFormElement>){
+
+    // TODO test the creaction of a video
     e.preventDefault();
     const payload = mapToVideoPayload(videoState);
-    await createVideo(payload);
-    setVideoState(initialVideoState)
+    try {
+      const { data } = await createVideo(payload).unwrap();
+      // setVideoState(initialVideoState);
+      handleSubmitUploads(data.id);
+    } catch (error) {
+      // useHandleSnackbar(
+      //   videoCreateStatus,
+      //   {
+      //     successMessage: 'Video created successfully',
+      //     errorMessage: 'Error while creating video'
+      //   }
+      // );
+      console.log(error)
+    }
   }
 
   async function handleChange(e: React.ChangeEvent<HTMLInputElement>){
