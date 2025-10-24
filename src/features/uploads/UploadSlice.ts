@@ -8,7 +8,7 @@ export interface UploadState {
     field: string;
     videoId: string;
     progress?: number;
-    status?: "idle" | "loading" | 'success' | 'failed'; 
+    status?: "idle" | "loading" | 'success' | 'failed';
 }
 
 type UploadProgress = {
@@ -16,66 +16,70 @@ type UploadProgress = {
     progress: number;
 }
 
-const initialState : UploadState[] = [];
+type UploadStatus = {
+    id: string;
+    status: "idle" | "loading" | 'success' | 'failed';
+}
+
+const initialState: UploadState[] = [];
 
 const uploadsSlice = createSlice({
     name: 'uploads',
     initialState,
     reducers: {
-        addUpload(state, action: PayloadAction<UploadState>){
-            state.push({...action.payload, status: 'idle', progress: 0});
+        addUpload(state, action: PayloadAction<UploadState>) {
+            state.push({ ...action.payload, status: 'idle', progress: 0 });
         },
-        removeUpload(state, action: PayloadAction<string>){
-            const index = state.findIndex((upload) => upload.id === action.payload );
-            if(index !== -1){
+        removeUpload(state, action: PayloadAction<string>) {
+            const index = state.findIndex((upload) => upload.id === action.payload);
+            if (index !== -1) {
                 state.splice(index, 1);
             }
         },
-        cleanAllUplaods(state){
+        cleanAllUplaods(state) {
             return [];
         },
-        cleanFinishedUploads(state){
-            const uplaods = state.filter(
+        cleanFinishedUploads(state) {
+            const uploads = state.filter(
                 (upload) => upload.status !== 'success' && upload.status !== 'failed'
             );
             state.splice(0, state.length);
-            state.push(...uplaods);
+            state.push(...uploads);
         },
-        setUploadProgress(state, action: PayloadAction<UploadProgress>){
-            const { id, progress} = action.payload;
-            const upload = state.find(upload => upload.id === id);
-            if(upload){
-                upload.progress = progress;
-            }
+        setUploadProgress(state, action: PayloadAction<UploadProgress>) {
+            const { id, progress } = action.payload;
+            return state.map(upload =>
+                upload.id === id ? { ...upload, progress } : upload
+            );
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(updateVideo.pending, (state, action)  => {
-            const upload = state.find((upload) => upload.id === action.meta.arg.id );
-            if(upload){
+        builder.addCase(updateVideo.pending, (state, action) => {
+            const upload = state.find((upload) => upload.id === action.meta.arg.id);
+            if (upload) {
                 upload.status = 'loading';
             }
         });
 
         builder.addCase(updateVideo.fulfilled, (state, action) => {
             const upload = state.find((upload) => upload.id === action.meta.arg.id);
-            if(upload){
+            if (upload) {
                 upload.status = 'success'
             }
         });
 
         builder.addCase(updateVideo.rejected, (state, action) => {
             const upload = state.find((upload) => upload.id === action.meta.arg.id);
-            if(upload){
+            if (upload) {
                 upload.status = 'failed';
             }
         })
     }
 });
 
-export const { 
-    addUpload, 
-    removeUpload, 
+export const {
+    addUpload,
+    removeUpload,
     setUploadProgress,
     cleanFinishedUploads,
     cleanAllUplaods,

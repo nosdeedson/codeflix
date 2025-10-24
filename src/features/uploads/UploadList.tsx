@@ -19,7 +19,7 @@ type Props = {
 
 export const UploadList = ({uploads}: Props) => {
 
-    const uploadList = useAppSelector(selectUploads)
+    const uploadList = useAppSelector(selectUploads);
 
     if(!uploadList || uploadList?.length === 0){
         return null;
@@ -38,7 +38,7 @@ export const UploadList = ({uploads}: Props) => {
                 }
             }}
         >
-            <Accordion>
+            <Accordion defaultExpanded>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="upload-content"
@@ -56,7 +56,7 @@ export const UploadList = ({uploads}: Props) => {
                                     </Typography>
                                 </ListItem>
                                 <ListItem>
-                                    <LinearWithValueLabel></LinearWithValueLabel>
+                                    <LinearWithValueLabel key={upload.id} value={upload.progress}></LinearWithValueLabel>
                                 </ListItem>
                                 </Box>
                             ))

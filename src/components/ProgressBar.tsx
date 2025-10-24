@@ -16,17 +16,12 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
   );
 }
 
-export default function LinearWithValueLabel() {
-  const [progress, setProgress] = useState(10);
+export default function LinearWithValueLabel({ value }: any) {
+  const [progress, setProgress] = useState(value);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+    setProgress(value);
+  }, [value]);
 
   return (
     <Box sx={{ width: '100%' }}>

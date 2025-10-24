@@ -1,10 +1,12 @@
-import { Autocomplete, Button, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, Paper, RadioGroup, TextField } from '@mui/material'
+import { Button, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, Paper, RadioGroup, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AutoCompleteFields } from '../../../components/AutoCompleteFields'
 import { InputFile } from '../../../components/InputFile'
 import { RatingsList } from '../../../components/RatingsList'
+import { onHandleAddFile } from '../../../helpers/handleAddFile/onHandleAddFile'
+import { onHandleRemoveFile } from '../../../helpers/handleRemoveFile/onHandleRemoveFile'
 import { CastMember } from '../../../types/CastMember'
 import { Category } from '../../../types/Category'
 import { Genre } from '../../../types/Genre'
@@ -38,38 +40,6 @@ export function VideoForm(
         handleRemoveFile,
     }: Props
 ) {
-
-    const handleAddThumbnail = (file: File) => {
-        handleAddFile({ name: "thumb_file", file });
-    };
-
-    const handleRemoveThumbnail = () => {
-        handleRemoveFile("thumb_file");
-    };
-
-    const handleAddBanner = (file: File) => {
-        handleAddFile({ name: "banner_file", file });
-    };
-
-    const handleAddTrailer = (file: File) => {
-        handleAddFile({ name: "trailer_file", file });
-    };
-
-    const handleAddVideo = (file: File) => {
-        handleAddFile({ name: "video_file", file });
-    };
-
-    const handleRemoveBanner = () => {
-        handleRemoveFile("banner_file");
-    };
-
-    const handleRemoveTrailer = () => {
-        handleRemoveFile("trailer_file");
-    };
-
-    const handleRemoveVideo = () => {
-        handleRemoveFile("video_file");
-    };
 
     const [filterCategories, setFilteredCategories] = useState<Category[]>(categories);
 
@@ -168,7 +138,7 @@ export function VideoForm(
                                     isDisabled={isDisabled}
                                     options={castMembers}
                                     values={video.cast_members}
-                                    label="Cast Memberes"
+                                    label="Cast Members"
                                     name='cast_members'
                                     handleChange={handleChange}
                                 />
@@ -254,16 +224,16 @@ export function VideoForm(
                             >
                                 <FormControl fullWidth >
                                     <InputFile
-                                        onAdd={handleAddThumbnail}
-                                        onRemove={handleRemoveThumbnail}
+                                        onAdd={(file) => onHandleAddFile(handleAddFile, file, "thumb_file")}
+                                        onRemove={() => onHandleRemoveFile(handleRemoveFile, 'thumb_file')}
                                         placeholder={"Select file"}
                                         label="Thumb"
                                     />
                                 </FormControl>
                                 <FormControl fullWidth >
                                     <InputFile
-                                        onAdd={handleAddBanner}
-                                        onRemove={handleRemoveBanner}
+                                        onAdd={(file) => onHandleAddFile(handleAddFile, file, 'banner_file')}
+                                        onRemove={() => onHandleRemoveFile(handleRemoveFile, 'banner_file')}
                                         placeholder={"Select file"}
                                         label="Banner"
                                     />
@@ -280,17 +250,16 @@ export function VideoForm(
                             >
                                 <FormControl fullWidth >
                                     <InputFile
-                                        onAdd={handleAddTrailer}
-                                        onRemove={handleRemoveTrailer}
+                                        onAdd={(file) => onHandleAddFile(handleAddFile, file, 'trailer_file')}
+                                        onRemove={() => onHandleRemoveFile(handleRemoveFile, 'trailer_file')}
                                         placeholder={"Select file"}
                                         label="Trailer"
                                     />
                                 </FormControl>
                                 <FormControl fullWidth >
-                                    <FormLabel component='legend'>Principal</FormLabel>
                                     <InputFile
-                                        onAdd={handleAddVideo}
-                                        onRemove={handleRemoveVideo}
+                                        onAdd={(file) => onHandleAddFile(handleAddFile, file, 'video_file')}
+                                        onRemove={() => onHandleRemoveFile(handleRemoveFile, 'video_file') }
                                         placeholder={"Select file"}
                                         label='Principal'
                                     />

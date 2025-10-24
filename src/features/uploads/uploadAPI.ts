@@ -11,15 +11,15 @@ export const formdata = (field: string, file: File) => {
     return data;
 }
 
-export const uploadProgress = (progressEvent: AxiosProgressEvent) =>{
-    if(progressEvent.total){
+export const uploadProgress = (progressEvent: AxiosProgressEvent) => {
+    if (progressEvent.total) {
         const progress = (progressEvent.loaded * 100) / progressEvent.total;
         return Math.round(progress * 100) / 100;
     }
     return 0;
 }
 
-export const uploadService = (params: {
+export const uploadService = async (params: {
     field: string,
     file: File,
     videoId: string,
@@ -28,5 +28,6 @@ export const uploadService = (params: {
     const { field, file, videoId, onUploadProgress } = params;
     const endpoint = getEndpoint(videoId);
     const data = formdata(field, file);
-    return axios.post(endpoint, data, {onUploadProgress});
+    const response = await axios.post(endpoint, data, { onUploadProgress });
+    return response;
 }

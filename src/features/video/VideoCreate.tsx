@@ -5,20 +5,19 @@ import { useAppDispatch } from '../../app/hooks';
 import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { FileObject, Video } from '../../types/Video';
 import { mapToVideoPayload } from '../genre/util';
-import { addUpload } from '../uploads/UploadSlice';
+import { addUpload, cleanFinishedUploads } from '../uploads/UploadSlice';
 import { VideoForm } from './components/VideoForm';
 import { initialState as initialVideoState, useCreateVideoMutation, useGetAllCastMembersQuery, useGetAllCategoriesQuery, useGetAllGenresQuery } from './VideoSlice';
 
 export const VideoCreate = () => {
   const [createVideo, videoCreateStatus] = useCreateVideoMutation();
-  const {data: categories} = useGetAllCategoriesQuery();
-  const {data: genres} = useGetAllGenresQuery();
-  const {data: castMembers} = useGetAllCastMembersQuery();
+  const { data: categories } = useGetAllCategoriesQuery();
+  const { data: genres } = useGetAllGenresQuery();
+  const { data: castMembers } = useGetAllCastMembersQuery();
   const [videoState, setVideoState] = useState<Video>(initialVideoState);
   const [selectedFiles, setSelectedFiles] = useState<FileObject[]>([]);
 
   const dispatch = useAppDispatch();
-  console.log(selectedFiles)
 
   useHandleSnackbar(
     videoCreateStatus,
@@ -29,43 +28,39 @@ export const VideoCreate = () => {
   );
 
   async function handleSubmitUploads(videoId: string) {
-    selectedFiles.forEach(({file, name}) => {
-      const payload = { id: nanoid(), file, videoId, field: name};
+    selectedFiles.forEach(({ file, name }) => {
+      const payload = { id: nanoid(), file, videoId, field: name };
       dispatch(addUpload(payload));
-    })
+    });
   }
 
-  async function handleSubimt(e: React.FormEvent<HTMLFormElement>){
-
-    // TODO test the creaction of a video
+  async function handleSubimt(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const payload = mapToVideoPayload(videoState);
     try {
       const { data } = await createVideo(payload).unwrap();
-      // setVideoState(initialVideoState);
-      handleSubmitUploads(data.id);
+      await handleSubmitUploads(data.id);
+      setSelectedFiles([]);
+      setVideoState(initialVideoState);
     } catch (error) {
-      // useHandleSnackbar(
-      //   videoCreateStatus,
-      //   {
-      //     successMessage: 'Video created successfully',
-      //     errorMessage: 'Error while creating video'
-      //   }
-      // );
-      console.log(error)
+      console.log(error);
+    } finally {
+      setTimeout(() => {
+        dispatch(cleanFinishedUploads());
+      }, 2000);
     }
   }
 
-  async function handleChange(e: React.ChangeEvent<HTMLInputElement>){
-    const {name, value} = e.target;
-    setVideoState({...videoState, [name]: value})
+  async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setVideoState({ ...videoState, [name]: value })
   }
 
-  async function handleAddFile({name, file}: FileObject){
-    setSelectedFiles([...selectedFiles, {name, file}]);
+  async function handleAddFile({ name, file }: FileObject) {
+    setSelectedFiles([...selectedFiles, { name, file }]);
   }
 
-  async function handleRemoveFile(name: string){
+  async function handleRemoveFile(name: string) {
     setSelectedFiles(selectedFiles.filter(it => it.name !== name))
   }
 
@@ -73,21 +68,21 @@ export const VideoCreate = () => {
     <Box >
       <Paper>
         <Box p={2}>
-            <Typography variant='h5'>
-              Create Video
-            </Typography>
+          <Typography variant='h5'>
+            Create Video
+          </Typography>
         </Box>
         <VideoForm
-        categories={categories?.data || []}
-        genres={genres?.data || []}
-        castMembers={castMembers?.data || []}
-        video={videoState}
-        isDisabled={videoCreateStatus.isLoading}
-        isLoading={videoCreateStatus.isLoading}
-        handleSubmit={handleSubimt}
-        handleChange={handleChange}
-        handleAddFile={handleAddFile}
-        handleRemoveFile={handleRemoveFile}
+          categories={categories?.data || []}
+          genres={genres?.data || []}
+          castMembers={castMembers?.data || []}
+          video={videoState}
+          isDisabled={videoCreateStatus.isLoading}
+          isLoading={videoCreateStatus.isLoading}
+          handleSubmit={handleSubimt}
+          handleChange={handleChange}
+          handleAddFile={handleAddFile}
+          handleRemoveFile={handleRemoveFile}
         />
       </Paper>
     </Box>
