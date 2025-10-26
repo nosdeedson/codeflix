@@ -85,6 +85,11 @@ export const {
     cleanAllUplaods,
 } = uploadsSlice.actions;
 
+export const selectAllUploadsFinished = (state: RootState) => {
+    const uploads = state.uploadSlice;
+    return uploads.length > 0 && uploads.every(u => u.status === 'success' || u.status === 'failed')
+}
+
 export const selectUploads = (state: RootState) => state.uploadSlice
 
 export const uploadReducer = uploadsSlice.reducer;

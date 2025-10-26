@@ -1,11 +1,11 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { nanoid } from '@reduxjs/toolkit';
-import React, { useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useHandleSnackbar } from '../../hooks/handleSnackbar/useHandleSnackBarStatus';
 import { FileObject, Video } from '../../types/Video';
 import { mapToVideoPayload } from '../genre/util';
-import { addUpload, cleanFinishedUploads } from '../uploads/UploadSlice';
+import { addUpload, cleanFinishedUploads, selectAllUploadsFinished } from '../uploads/UploadSlice';
 import { VideoForm } from './components/VideoForm';
 import { initialState as initialVideoState, useCreateVideoMutation, useGetAllCastMembersQuery, useGetAllCategoriesQuery, useGetAllGenresQuery } from './VideoSlice';
 
@@ -16,6 +16,8 @@ export const VideoCreate = () => {
   const { data: castMembers } = useGetAllCastMembersQuery();
   const [videoState, setVideoState] = useState<Video>(initialVideoState);
   const [selectedFiles, setSelectedFiles] = useState<FileObject[]>([]);
+  const [resetKey, setResetKey] = useState(0);
+  const allUploadsFinished = useAppSelector(selectAllUploadsFinished);
 
   const dispatch = useAppDispatch();
 
@@ -39,15 +41,15 @@ export const VideoCreate = () => {
     const payload = mapToVideoPayload(videoState);
     try {
       const { data } = await createVideo(payload).unwrap();
-      await handleSubmitUploads(data.id);
+      if(selectedFiles?.length > 0){
+        await handleSubmitUploads(data.id);
+      }
       setSelectedFiles([]);
       setVideoState(initialVideoState);
     } catch (error) {
       console.log(error);
     } finally {
-      setTimeout(() => {
-        dispatch(cleanFinishedUploads());
-      }, 2000);
+      setResetKey(prev => prev + 1);
     }
   }
 
@@ -64,6 +66,12 @@ export const VideoCreate = () => {
     setSelectedFiles(selectedFiles.filter(it => it.name !== name))
   }
 
+  useEffect(() => {
+    if(allUploadsFinished){
+      dispatch(cleanFinishedUploads());
+    }
+  }, [allUploadsFinished, dispatch]);
+
   return (
     <Box >
       <Paper>
@@ -73,6 +81,7 @@ export const VideoCreate = () => {
           </Typography>
         </Box>
         <VideoForm
+          key={resetKey}
           categories={categories?.data || []}
           genres={genres?.data || []}
           castMembers={castMembers?.data || []}

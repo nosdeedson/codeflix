@@ -1,5 +1,5 @@
 import { IconButton, TextField } from "@mui/material";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileIcon from "@mui/icons-material/FileCopy";
 
@@ -28,7 +28,8 @@ export const InputFile: React.FC<Props> = ({
         onAdd(file)
     };
 
-    const handleClear = () => {
+    const handleClear = (e: React.MouseEvent) => {
+        e.stopPropagation();
         setSelectedFiles(undefined);
         if(selectedFiles){
             onRemove(selectedFiles);
@@ -48,6 +49,7 @@ export const InputFile: React.FC<Props> = ({
                 label={label}
                 value={selectedFiles?.name || ""}
                 onChange={handleChange}
+                onClick={handleFileInput}
                 InputProps={{
                     readOnly: true,
                     endAdornment: selectedFiles ? (
