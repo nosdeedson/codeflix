@@ -1,0 +1,29 @@
+services:
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1
+    container_name: keycloak
+    command: start-dev
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
+      - KC_DB_USERNAME=postgres
+      - KC_DB_PASSWORD=root
+
+    ports:
+      - "8080:8080"
+    # depends_on:
+    #   postgres:
+    #     condition: service_healthy
+    networks:
+      - documents_default
+
+volumes:
+  keycloak_data:
+
+networks:
+  documents_default:
+    external: true

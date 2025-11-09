@@ -1,19 +1,17 @@
-import { configureStore, ThunkAction, Action, combineReducers, PreloadedState } from '@reduxjs/toolkit';
+import { Action, combineReducers, configureStore, PreloadedState, ThunkAction } from '@reduxjs/toolkit';
 
 import { apiSlice } from '../features/api/apiSlice';
-import { categoriesApiSlice } from "../features/categories/categorySlice";
-import { castMembersApiSlice } from '../features/cast/castMembersSlice';
-import { genreApiSlice } from '../features/genre/GenreSlice';
-import { videoApiSlice } from '../features/video/VideoSlice';
+import { authSlice } from '../features/auth/authSlice';
 import { uploadReducer } from '../features/uploads/UploadSlice';
 import { uploadQueue } from '../middleware/uploadQueue';
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
-  [categoriesApiSlice.reducerPath]: apiSlice.reducer,
-  [castMembersApiSlice.reducerPath]: apiSlice.reducer,
-  [genreApiSlice.reducerPath]: apiSlice.reducer,
-  [videoApiSlice.reducerPath]: apiSlice.reducer,
+  // [categoriesApiSlice.reducerPath]: apiSlice.reducer,
+  // [castMembersApiSlice.reducerPath]: apiSlice.reducer,
+  // [genreApiSlice.reducerPath]: apiSlice.reducer,
+  // [videoApiSlice.reducerPath]: apiSlice.reducer,
+  auth: authSlice.reducer,
   uploadSlice: uploadReducer,
 });
 
