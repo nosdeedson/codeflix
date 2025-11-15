@@ -17,6 +17,8 @@ import { VideoList } from './features/video/VideoList';
 
 import "./App.css";
 import { UploadList } from './features/uploads/UploadList';
+import { Login } from './components/Login';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
 
@@ -30,27 +32,29 @@ function App() {
   return (
     <Layout>
       <Routes>
-
+        {/* Login */}
+        <Route path='/login' element={<Login />}></Route>
+        
         {/*categories */}
-        <Route path='/' element={<CategoryList />}></Route>
-        <Route path='categories' element={<CategoryList />}></Route>
-        <Route path='categories/create' element={<CategoryCreate />}></Route>
-        <Route path='categories/edit/:id' element={<CategoryEdit />}></Route>
+        <Route path='/' element={<ProtectedRoute> <CategoryList /> </ProtectedRoute>}></Route>
+        <Route path='categories' element={ <ProtectedRoute> <CategoryList /> </ProtectedRoute>}></Route>
+        <Route path='categories/create' element={ <ProtectedRoute> <CategoryCreate /> </ProtectedRoute>}></Route>
+        <Route path='categories/edit/:id' element={ <ProtectedRoute> <CategoryEdit /> </ProtectedRoute>}></Route>
 
         {/*cast members */}
-        <Route path='cast-members' element={<CastMemberList />}></Route>
-        <Route path='cast-members/create' element={<CastMemberCreate />}></Route>
-        <Route path='cast-members/edit/:id' element={<CastMemberEdit />}></Route>
+        <Route path='cast-members' element={ <ProtectedRoute> <CastMemberList /> </ProtectedRoute>}></Route>
+        <Route path='cast-members/create' element={ <ProtectedRoute> <CastMemberCreate /> </ProtectedRoute>}></Route>
+        <Route path='cast-members/edit/:id' element={ <ProtectedRoute> <CastMemberEdit /> </ProtectedRoute>}></Route>
 
         {/* Genres */}
-        <Route path='genres' element={<GenreList />}></Route>
-        <Route path='genres/create' element={<GenreCreate />}></Route>
-        <Route path='genres/edit/:id' element={<GenreEdit />}></Route>
+        <Route path='genres' element={ <ProtectedRoute> <GenreList /> </ProtectedRoute>}></Route>
+        <Route path='genres/create' element={ <ProtectedRoute> <GenreCreate /> </ProtectedRoute>}></Route>
+        <Route path='genres/edit/:id' element={ <ProtectedRoute> <GenreEdit /> </ProtectedRoute>}></Route>
 
         {/* Videos */}
-        <Route path='videos' element={<VideoList />}></Route>
-        <Route path='videos/create' element={<VideoCreate />}></Route>
-        <Route path='Videos/edit/:id' element={<VideoEdit />}></Route>
+        <Route path='videos' element={ <ProtectedRoute> <VideoList /> </ProtectedRoute>}></Route>
+        <Route path='videos/create' element={ <ProtectedRoute> <VideoCreate /> </ProtectedRoute>}></Route>
+        <Route path='Videos/edit/:id' element={ <ProtectedRoute> <VideoEdit /> </ProtectedRoute>}></Route>
 
 
         {/* 404 */}

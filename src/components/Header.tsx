@@ -1,7 +1,12 @@
-import { Box, Button, IconButton, Toolbar, Typography } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu';
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import MenuIcon from '@mui/icons-material/Menu';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { useAppSelector } from '../app/hooks';
+import { selectIsAuthenticated } from '../features/auth/authSlice';
+import { keycloak } from '../keycloakConfig';
 
 type Props = {
   toggle: () => void;
@@ -14,6 +19,8 @@ export function Header({
   theme,
   toggle
 }: Props) {
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  console.log(isAuthenticated);
   return (
     <Box >
       <Toolbar>
@@ -33,7 +40,23 @@ export function Header({
         <IconButton sx={{ ml: 1 }} onClick={toggle} color="inherit">
           {theme === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
-        <Button color="inherit">Login</Button>
+
+        { isAuthenticated && (
+          <IconButton
+            color="inherit"
+            onClick={() => keycloak.login()}
+          >
+            <LoginIcon/>
+          </IconButton>
+        )}
+        { !isAuthenticated && (
+          <IconButton
+            color="inherit"
+            onClick={() => keycloak.logout()}
+          >
+            <LogoutIcon/>
+          </IconButton>
+        )}
       </Toolbar>
     </Box>
   )

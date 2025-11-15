@@ -1,8 +1,8 @@
 import Keycloak from "keycloak-js";
 
 const keycloakConfig = {
-    url: "http://localhost:8080/auth",
-    realm: 'codeFlix',
+    url: "http://localhost:8080",
+    realm: 'codeflix',
     clientId: 'codeFlix',
 }
 
