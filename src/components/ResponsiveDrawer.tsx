@@ -1,6 +1,8 @@
 import { Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../app/hooks";
+import { selectIsAuthenticated } from "../features/auth/authSlice";
 
 const drawerWidth = 240;
 
@@ -13,7 +15,8 @@ export function ResponsiveDrawer({
     open,
     onClose
 }: Props) {
-
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
+        
     const routes = [
         { path: "/", name: "Categories" },
         { path: "/cast-members", name: "Cast Members" },
@@ -29,7 +32,7 @@ export function ResponsiveDrawer({
                 </Typography>
             </Toolbar>
             <Divider />
-            <List>
+            { isAuthenticated && (<List>
                 {routes.map((route) => (
                     <Link
                         key={route.path}
@@ -44,7 +47,7 @@ export function ResponsiveDrawer({
                         </ListItem>
                     </Link>
                 ))}
-            </List>
+            </List>)}
         </div>
     );
 

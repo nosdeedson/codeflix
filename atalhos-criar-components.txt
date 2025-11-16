@@ -12,3 +12,11 @@ yarn test -- --coverage --watchAll=false
 
 test a file 
 yarn test --testPathPattern src/features/categories/CategoryList.test.tsx
+
+curl -X POST "http://localhost:8080/realms/codeflix/protocol/openid-connect/token" \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     --data-urlencode "client_id=codeFlix" \
+     --data-urlencode "client_secret=ztt5K3vEQeUF2cEiWbSI57V3x8CA2ga0" \
+     --data-urlencode "grant_type=password" \
+     --data-urlencode "username=codeflix@email.com" \
+     --data-urlencode "password=1234"

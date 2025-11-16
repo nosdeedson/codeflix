@@ -7,6 +7,7 @@ import { Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { useAppSelector } from '../app/hooks';
 import { selectIsAuthenticated } from '../features/auth/authSlice';
 import { keycloak } from '../keycloakConfig';
+import { Link } from "react-router-dom";
 
 type Props = {
   toggle: () => void;
@@ -19,9 +20,9 @@ export function Header({
   theme,
   toggle
 }: Props) {
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  console.log(isAuthenticated);
-  return (
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
+    return (
     <Box >
       <Toolbar>
         <IconButton
@@ -41,15 +42,16 @@ export function Header({
           {theme === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
 
-        { isAuthenticated && (
+        { !isAuthenticated && (
           <IconButton
             color="inherit"
-            onClick={() => keycloak.login()}
+            component={Link}
+            to="/login"
           >
             <LoginIcon/>
           </IconButton>
         )}
-        { !isAuthenticated && (
+        { isAuthenticated && (
           <IconButton
             color="inherit"
             onClick={() => keycloak.logout()}

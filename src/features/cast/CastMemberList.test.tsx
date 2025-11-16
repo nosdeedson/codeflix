@@ -7,7 +7,6 @@ import { castMemberResponse } from "./mocks";
 
 const handlers = [
   rest.get(`http://localhost:8000/api/cast_members`, async (req, res, ctx) => {
-    console.log(req.url.toString());
     return await res(ctx.json({data: castMemberResponse}))
   })
 ];

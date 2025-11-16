@@ -19,8 +19,6 @@ export const VideoEdit = ( ) => {
   const [videoState, setVideoState] = useState<Video>(initialVideoState);
   const [selectedFiles, setSelectedFiles] = useState<FileObject[]>([]);
 
-  console.log(selectedFiles);
-
   useHandleSnackbar(
     videoUpdateStatus,
     {

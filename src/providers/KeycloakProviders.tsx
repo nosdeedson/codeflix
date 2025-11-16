@@ -24,7 +24,7 @@ export const KeycloakProvider = ({ children }: { children: React.ReactNode }) =>
     const initKeycloak = async () => {
       try {
         const authenticated = await keycloak.init({
-          onLoad: "login-required",
+          onLoad: "check-sso",
           checkLoginIframe: false,
           pkceMethod: "S256"
         });

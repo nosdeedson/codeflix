@@ -14,13 +14,13 @@ const store = setupStore()
 
 root.render(
   <Provider store={store}>
-    <KeycloakProvider>
+        <KeycloakProvider>
       <React.StrictMode>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </React.StrictMode>
-    </KeycloakProvider>
+        </KeycloakProvider>
   </Provider>
 );
 

@@ -43,7 +43,6 @@ export const CastMemberList = () => {
   );
 
   if (error) {
-    console.log(error)
     return <Typography variant='h2' color={'whitesmoke'}>Somenthing went wrong</Typography>
   }
 

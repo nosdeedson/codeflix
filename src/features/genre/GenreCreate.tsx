@@ -18,7 +18,6 @@ export const GenreCreate = () => {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const payload = mapToGenrePayload(genreState);
-        console.log(payload)
         await createGenre(payload);
         setGenreState(initialGenreState)
     }
