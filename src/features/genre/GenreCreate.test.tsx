@@ -1,6 +1,6 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { renderWithProviders } from "../../utils/test-utils";
+import { renderWithProviders } from "../../utils/utils";
 import { baseUrl } from "../api/apiSlice";
 import { categoryResponse } from "../categories/mocks";
 import { GenreCreate } from "./GenreCreate";

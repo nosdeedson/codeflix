@@ -52,8 +52,7 @@ export const VideoList = () => {
 
   return (
     <Box maxWidth={'lg'} >
-      <Box display='flex' justifyContent='space-between'>
-        <Typography variant='h5' color='whitesmoke'>List Videos</Typography>
+      <Box display='flex' justifyContent='end'>
         <Button
           variant='contained'
           color='secondary'

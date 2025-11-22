@@ -7,6 +7,7 @@ import './index.css';
 import { setupStore } from './app/store';
 import { BrowserRouter } from "react-router-dom";
 import { KeycloakProvider } from './providers/KeycloakProviders';
+import { KeycloakProviderV2 } from './providers/KeycloakProvidersV2';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -14,13 +15,13 @@ const store = setupStore()
 
 root.render(
   <Provider store={store}>
-        <KeycloakProvider>
+        <KeycloakProviderV2>
       <React.StrictMode>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </React.StrictMode>
-        </KeycloakProvider>
+        </KeycloakProviderV2>
   </Provider>
 );
 

@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { render, renderWithProviders, screen, waitFor } from "../../utils/test-utils"
+import { render, renderWithProviders, screen, waitFor } from "../../utils/utils"
 import { GenreList } from "./GenreList"
 import { baseUrl } from "../api/apiSlice";
 import { genreResponse } from "./mocks";

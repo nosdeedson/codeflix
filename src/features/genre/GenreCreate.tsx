@@ -30,13 +30,6 @@ export const GenreCreate = () => {
     return (
         <Box>
             <Paper>
-                <Box p={2}>
-                    <Box mb={2}>
-                        <Typography variant='h5'>
-                            Create Genre
-                        </Typography>
-                    </Box>
-                </Box>
                 <GenreForm
                     categories={categories?.data || []}
                     genre={genreState}

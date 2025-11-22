@@ -62,8 +62,7 @@ export const CategoryList: any = () => {
 
     return (
         <Box maxWidth="lg">
-            <Box display='flex' justifyContent='space-between'>
-                <Typography variant='h5' >List Categories</Typography>
+            <Box display='flex' justifyContent='end'>
                 <Button
                     variant="contained"
                     color="secondary"

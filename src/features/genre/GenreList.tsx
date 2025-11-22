@@ -49,8 +49,7 @@ export const GenreList = () => {
 
   return (
     <Box maxWidth='lg' >
-      <Box display='flex' justifyContent='space-between'>
-        <Typography variant='h5' color='whitesmoke'>List Genres</Typography>
+      <Box display='flex' justifyContent='end'>
         <Button
           variant="contained"
           color="secondary"

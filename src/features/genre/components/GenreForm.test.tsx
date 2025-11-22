@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react"
 import { GenreForm } from "./GenreForm"
 import { BrowserRouter } from "react-router-dom"
 import { Category } from "../../../types/Category"
-import { renderWithProviders } from "../../../utils/test-utils";
+import { renderWithProviders } from "../../../utils/utils";
 import userEvent from "@testing-library/user-event";
 
 const category: Category = {

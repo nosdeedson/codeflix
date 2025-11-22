@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { renderWithProviders } from "../utils/test-utils";
+import { renderWithProviders } from "../utils/utils";
 import { Layout } from "./Layout";
 
 

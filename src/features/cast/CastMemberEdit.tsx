@@ -45,9 +45,6 @@ export const CastMemberEdit = () => {
     <Box >
       <Paper>
         <Box p={2}>
-          <Box mb={2}>
-            <Typography variant='h4'>Edit Cast Member</Typography>
-          </Box>
         </Box>
 
         <CastMembersForm

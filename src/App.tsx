@@ -121,7 +121,7 @@ function App() {
           </ProtectedRoute>
         }>
         </Route>
-        <Route path='Videos/edit/:id' element={
+        <Route path='videos/edit/:id' element={
           <ProtectedRoute>
             <VideoEdit />
           </ProtectedRoute>

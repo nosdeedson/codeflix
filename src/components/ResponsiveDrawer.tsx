@@ -18,7 +18,7 @@ export function ResponsiveDrawer({
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
         
     const routes = [
-        { path: "/", name: "Categories" },
+        { path: "/categories", name: "Categories" },
         { path: "/cast-members", name: "Cast Members" },
         { path: "/genres", name: "Genres" },
         { path: "/videos", name: "Videos" },

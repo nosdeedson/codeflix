@@ -1,6 +1,6 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import { renderWithProviders, screen, waitFor } from "../../utils/test-utils"
+import { renderWithProviders, screen, waitFor } from "../../utils/utils"
 import { baseUrl } from '../api/apiSlice'
 import { CategoryList } from "./CategoryList"
 import { categoryResponse } from './mocks'

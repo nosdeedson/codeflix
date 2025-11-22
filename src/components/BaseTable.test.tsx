@@ -1,6 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { categoryResponse } from "../features/categories/mocks";
-import { render, renderWithProviders } from "../utils/test-utils";
+import { render, renderWithProviders } from "../utils/utils";
 import { BaseTable } from "./BaseTable";
 
 

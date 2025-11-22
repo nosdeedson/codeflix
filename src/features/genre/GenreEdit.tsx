@@ -39,11 +39,6 @@ export const GenreEdit = () => {
   return (
     <Box>
       <Paper>
-        <Box p={2}>
-          <Box mb={2}>
-            <Typography variant="h4">Edit Genre</Typography>
-          </Box>
-        </Box>
 
         <GenreForm
           categories={categories?.data || []}

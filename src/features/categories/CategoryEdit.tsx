@@ -46,9 +46,6 @@ export const CategoryEdit: any = () => {
         <Box>
             <Paper>
                 <Box p={2}>
-                    <Box mb={2}>
-                        <Typography variant='h4'>Edit Category</Typography>
-                    </Box>
                 </Box>
 
                 <CategoryForm

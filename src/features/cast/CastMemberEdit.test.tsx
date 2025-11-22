@@ -1,6 +1,6 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { fireEvent, renderWithProviders, screen, waitFor } from "../../utils/test-utils"
+import { fireEvent, renderWithProviders, screen, waitFor } from "../../utils/utils"
 import { baseUrl } from "../api/apiSlice";
 import { categoryResponse } from "../categories/mocks";
 import { CastMemberEdit } from "./CastMemberEdit"

@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { fireEvent, renderWithProviders, screen, waitFor } from "../../utils/test-utils"
+import { fireEvent, renderWithProviders, screen, waitFor } from "../../utils/utils"
 import { GenreEdit } from "./GenreEdit"
 import { baseUrl } from "../api/apiSlice";
 import { setupServer } from "msw/lib/node";

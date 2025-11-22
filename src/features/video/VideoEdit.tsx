@@ -57,9 +57,6 @@ export const VideoEdit = ( ) => {
     <Box>
       <Paper>
         <Box p={2}>
-          <Typography variant='h5'>
-            Edit Video
-          </Typography>
           <VideoForm
           categories={categories?.data || []}
           genres={genres?.data || []}

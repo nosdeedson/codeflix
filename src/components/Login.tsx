@@ -1,6 +1,10 @@
 import { Box, Button, FormControl, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { keycloak } from "../keycloakConfig";
+import { KeycloakProvider } from "../providers/KeycloakProviders";
+import { useAuth } from "../providers/KeycloakProvidersV2";
+import { useNavigate } from "react-router-dom";
+
+
 
 const initialState = {
     password: "",
@@ -10,19 +14,23 @@ const initialState = {
 export function Login() {
 
     const [userInfo, setUserInfo] = useState(initialState);
+    const [loading, setLoading] = useState(false);
+    const { loginWithCredentials } = useAuth();
+    const navigate = useNavigate();
 
-    // async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
-    //     try {
-    //         await keycloak.login({
-    //             username: userInfo.email,
-    //             password: userInfo.password,
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+        e.preventDefault();
+        setLoading(true);
 
-    //         })
-    //     } catch (error) {
+        try {
+            await loginWithCredentials(userInfo.email, userInfo.password);
+            navigate('/categories');
+        } catch (error) {
             
-    //     }
-    //     setUserInfo({password: '', email: ''})
-    // }
+        }
+        setUserInfo({password: '', email: ''});
+        setLoading(false)
+    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const { name, value } = e.target;
@@ -53,7 +61,7 @@ export function Login() {
                 <Typography variant="h5" sx={{p: 1}}>
                     Welcome!
                 </Typography>
-                <form >
+                <form onSubmit={handleSubmit} >
                     <Grid container spacing={4}>
                         <Grid item xs={12}>
                             <FormControl fullWidth>
@@ -77,10 +85,11 @@ export function Login() {
                         </Grid>
                         <Grid item xs={12}>
                             <FormControl fullWidth>
-                                <Button onClick={() => keycloak.login({redirectUri: "http://localhost:3000/categories"})}
+                                <Button  type="submit"
+                                    disabled={loading}
                                     variant='contained'
                                 >
-                                    Login
+                                    {loading ? 'Logging in...' : 'Login'}
                                 </Button>
                             </FormControl>
                         </Grid>

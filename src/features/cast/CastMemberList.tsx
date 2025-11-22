@@ -48,8 +48,7 @@ export const CastMemberList = () => {
 
   return (
     <Box maxWidth='lg' >
-      <Box display='flex' justifyContent='space-between'>
-        <Typography variant='h5' color='whitesmoke'>List Cast Members</Typography>
+      <Box display='flex' justifyContent='end'>
         <Button 
           variant='contained'
           color='secondary'
